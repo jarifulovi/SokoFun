@@ -1,0 +1,11 @@
+.mainAnchor {
+    -fx-background-color: transparent; /* Blue color */
+}
+
+.boardAnchor {
+    -fx-background-color: transparent; /* Green color */
+}
+
+.stateAnchor {
+    -fx-background-color: #e74c3c; /* Red color */
+}
