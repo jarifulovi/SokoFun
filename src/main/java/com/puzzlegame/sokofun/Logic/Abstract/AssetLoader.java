@@ -1,7 +1,6 @@
 package com.puzzlegame.sokofun.Logic.Abstract;
 
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 import java.util.HashMap;
 import java.util.Map;

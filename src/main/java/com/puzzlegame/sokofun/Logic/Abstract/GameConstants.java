@@ -9,9 +9,9 @@ public final class GameConstants {
     public static final int BOARD_WIDTH = 700;
     public static final int BOARD_HEIGHT = 600;
 
-    public static final int TYPE_INDEX = 0;
-    public static final int BLOCK_BOX_INDEX = 1;
-    public static final int ENV_INDEX = 2;
+    public static final int GROUND_INDEX = 0;
+    public static final int BLOCK_INDEX = 1;
+    public static final int OBJECT_INDEX = 2;
     // Tile types ( always beneath everything )
     public static final int NOTHING = 0;
     public static final int FLOOR = 1;
@@ -28,13 +28,19 @@ public final class GameConstants {
     public static final int BOX = 10;
     public static final int PLAYER = 11;
 
-    // Environments ( overlap with crates )
+    // Objects ( overlap with crates and player )
     public static final int WOOD_GOAL = 12;
     public static final int BLUE_GOAL = 13;
     public static final int GREEN_GOAL = 14;
     public static final int RED_GOAL = 15;
     public static final int STONE_GOAL = 16;
     public static final int COIN = 17;
+
+    // Game controls
+    public static final int UP = 1;
+    public static final int DOWN = 2;
+    public static final int LEFT = 3;
+    public static final int RIGHT = 4;
 
     // Asset paths
 
@@ -60,13 +66,13 @@ public final class GameConstants {
     public static final String BLUE_BOX_PATH = "com/puzzlegame/sokofun/Assets/image-pack/PNG/Default size/Crates/blue_box.png";
     public static final String GREEN_BOX_PATH = "com/puzzlegame/sokofun/Assets/image-pack/PNG/Default size/Crates/green_box.png";
     public static final String RED_BOX_PATH = "com/puzzlegame/sokofun/Assets/image-pack/PNG/Default size/Crates/red_box.png";
-    // Tile environments
-    public static final String WOOD_GOAL_PATH = "com/puzzlegame/sokofun/Assets/image-pack/PNG/Default size/Environment/wood_goal.png";
-    public static final String BLUE_GOAL_PATH = "com/puzzlegame/sokofun/Assets/image-pack/PNG/Default size/Environment/blue_goal.png";
-    public static final String GREEN_GOAL_PATH = "com/puzzlegame/sokofun/Assets/image-pack/PNG/Default size/Environment/green_goal.png";
-    public static final String RED_GOAL_PATH = "com/puzzlegame/sokofun/Assets/image-pack/PNG/Default size/Environment/red_goal.png";
-    public static final String STONE_GOAL_PATH = "com/puzzlegame/sokofun/Assets/image-pack/PNG/Default size/Environment/stone_goal.png";
-    public static final String COIN_GOAL_PATH = "com/puzzlegame/sokofun/Assets/image-pack/PNG/Default size/Environment/coin.png";
+    // Tile objects
+    public static final String WOOD_GOAL_PATH = "com/puzzlegame/sokofun/Assets/image-pack/PNG/Default size/Objects/wood_goal.png";
+    public static final String BLUE_GOAL_PATH = "com/puzzlegame/sokofun/Assets/image-pack/PNG/Default size/Objects/blue_goal.png";
+    public static final String GREEN_GOAL_PATH = "com/puzzlegame/sokofun/Assets/image-pack/PNG/Default size/Objects/green_goal.png";
+    public static final String RED_GOAL_PATH = "com/puzzlegame/sokofun/Assets/image-pack/PNG/Default size/Objects/red_goal.png";
+    public static final String STONE_GOAL_PATH = "com/puzzlegame/sokofun/Assets/image-pack/PNG/Default size/Objects/stone_goal.png";
+    public static final String COIN_GOAL_PATH = "com/puzzlegame/sokofun/Assets/image-pack/PNG/Default size/Objects/coin.png";
 
 
 }

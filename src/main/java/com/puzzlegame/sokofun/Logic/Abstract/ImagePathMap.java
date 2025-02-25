@@ -2,7 +2,6 @@ package com.puzzlegame.sokofun.Logic.Abstract;
 import javafx.scene.image.Image;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 
 public final class ImagePathMap {
@@ -16,11 +15,17 @@ public final class ImagePathMap {
         IMAGE_PATH_MAP.put(GameConstants.FLOOR, GameConstants.TILE_FLOOR_PATH);
         IMAGE_PATH_MAP.put(GameConstants.WOOD, GameConstants.WOOD_PATH);
         IMAGE_PATH_MAP.put(GameConstants.WOOD_BLOCK, GameConstants.WOOD_BLOCK_PATH);
+        IMAGE_PATH_MAP.put(GameConstants.WOOD_GOAL, GameConstants.WOOD_GOAL_PATH);
         IMAGE_PATH_MAP.put(GameConstants.BOX, GameConstants.WOOD_BOX_PATH);
         IMAGE_PATH_MAP.put(GameConstants.STONE, GameConstants.STONE_PATH);
         IMAGE_PATH_MAP.put(GameConstants.STONE_BLOCK, GameConstants.STONE_BLOCK_PATH);
+        IMAGE_PATH_MAP.put(GameConstants.STONE_GOAL, GameConstants.WOOD_GOAL_PATH);
         IMAGE_PATH_MAP.put(GameConstants.RED, GameConstants.RED_PATH);
         IMAGE_PATH_MAP.put(GameConstants.RED_BLOCK, GameConstants.RED_BLOCK_PATH);
+        IMAGE_PATH_MAP.put(GameConstants.RED_GOAL, GameConstants.RED_GOAL_PATH);
+        IMAGE_PATH_MAP.put(GameConstants.BLUE_GOAL, GameConstants.BLUE_GOAL_PATH);
+        IMAGE_PATH_MAP.put(GameConstants.GREEN_GOAL, GameConstants.GREEN_GOAL_PATH);
+        IMAGE_PATH_MAP.put(GameConstants.COIN, GameConstants.COIN_GOAL_PATH);
     }
 
     public static String getImagePath(int block) {
@@ -29,9 +34,7 @@ public final class ImagePathMap {
 
     public static Image getImage(int block) {
         String path = getImagePath(block);
-        if (path != null) {
-            return AssetLoader.getImage(path);
-        }
+        if (path != null) return AssetLoader.getImage(path);
         // Return a default green ground
         return AssetLoader.getImage(GameConstants.TILE_GREEN_PATH);
     }
