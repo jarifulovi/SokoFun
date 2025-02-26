@@ -15,11 +15,11 @@ public class BoardLogic {
     };
 
     private static final int[][] blockLayer = {
-            {STONE, STONE, STONE, STONE, STONE},
-            {STONE, NOTHING, NOTHING, STONE, STONE},
-            {STONE, NOTHING, BOX, NOTHING, NOTHING},
-            {STONE, NOTHING, BOX, STONE, STONE},
-            {STONE, STONE, STONE, STONE, STONE}
+            {NOTHING, NOTHING, NOTHING, NOTHING, NOTHING},
+            {NOTHING, NOTHING, NOTHING, NOTHING, NOTHING},
+            {NOTHING, NOTHING, NOTHING, BOX, NOTHING},
+            {NOTHING, NOTHING, NOTHING, NOTHING, NOTHING},
+            {NOTHING, NOTHING, NOTHING, NOTHING, NOTHING}
     };
 
 

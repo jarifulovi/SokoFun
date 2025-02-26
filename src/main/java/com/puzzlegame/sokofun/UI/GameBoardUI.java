@@ -21,8 +21,7 @@ public class GameBoardUI {
     private PlayerUI playerUI;
 
     public GameBoardUI(GridPane boardGrid,int numRows,int numCols) {
-        AssetLoader.loadTiles();
-        AssetLoader.loadPlayer();
+        loadAssets();
         this.boardGrid = boardGrid;
         this.numRows = numRows;
         this.numCols = numCols;
@@ -34,12 +33,13 @@ public class GameBoardUI {
 
     public void renderInitialBoard(int playerRow,int playerCol,int[][][] board) {
 
-        configureGrid(numCols, numRows, tileWidth, tileHeight);
+        configureGrid();
         boardGrid.getChildren().clear();
 
         renderLayer(board[GameConstants.GROUND_INDEX]);
         renderLayer(board[GameConstants.BLOCK_INDEX]);
         renderLayer(board[GameConstants.OBJECT_INDEX]);
+        renderBox(board);
         playerUI.renderInitialPlayer(playerRow,playerCol,tileWidth,tileHeight);
     }
 
@@ -95,7 +95,6 @@ public class GameBoardUI {
                     int childType = Integer.parseInt(parts[0]);
 
                     if (childType == type) {
-                        System.out.println(childType);
                         return child;
                     }
                 }
@@ -106,9 +105,34 @@ public class GameBoardUI {
     }
 
 
+    // Render except box and player
+    private void renderLayer(int[][] layer) {
+        for (int row = 0; row < layer.length; row++) {
+            for (int col = 0; col < layer[row].length; col++) {
+                if (willRender(layer[row][col])) {
+                    Image tileImage = ImagePathMap.getImage(layer[row][col]);
+                    ImageView tileView = getTileView(tileImage,layer[row][col],row,col);
+                    boardGrid.add(tileView, col, row);
+                }
+            }
+        }
+    }
+
+    private void renderBox(int[][][] board) {
+        int[][] blockLayer = board[GameConstants.BLOCK_INDEX];
+        for (int row = 0; row < blockLayer.length; row++) {
+            for (int col = 0; col < blockLayer[row].length; col++) {
+                if(blockLayer[row][col] == GameConstants.BOX) {
+                    int goalType = board[GameConstants.OBJECT_INDEX][row][col];
+                    ImageView boxView = getValidBox(goalType,row,col);
+                    boardGrid.add(boxView,col,row);
+                }
+            }
+        }
+    }
 
 
-    private void configureGrid(int numCols, int numRows, double tileWidth, double tileHeight) {
+    private void configureGrid() {
         boardGrid.getColumnConstraints().clear();
         boardGrid.getRowConstraints().clear();
 
@@ -124,18 +148,7 @@ public class GameBoardUI {
             boardGrid.getRowConstraints().add(rowConstraints);
         }
     }
-    // Renders a given layer (ground, block, or object)
-    private void renderLayer(int[][] layer) {
-        for (int row = 0; row < layer.length; row++) {
-            for (int col = 0; col < layer[row].length; col++) {
-                if (willRender(layer[row][col])) {
-                    Image tileImage = ImagePathMap.getImage(layer[row][col]);
-                    ImageView tileView = getTileView(tileImage,layer[row][col],row,col);
-                    boardGrid.add(tileView, col, row);
-                }
-            }
-        }
-    }
+
 
     private ImageView getTileView(Image tileImage,int type, int row, int col) {
         ImageView tileView = new ImageView(tileImage);
@@ -146,7 +159,13 @@ public class GameBoardUI {
     }
 
     private boolean willRender(int block) {
-        return block != GameConstants.NOTHING && block != GameConstants.PLAYER;
+        return block != GameConstants.NOTHING && block != GameConstants.PLAYER
+                && block != GameConstants.BOX;
+    }
+
+    private void loadAssets() {
+        AssetLoader.loadPlayer();
+        AssetLoader.loadTiles();
     }
 
     private double calculateTileWidth(int numCols) {

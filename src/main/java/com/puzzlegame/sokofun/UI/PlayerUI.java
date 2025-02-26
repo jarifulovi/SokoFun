@@ -25,17 +25,12 @@ public class PlayerUI {
 
 
     public void renderPlayer(Move move, double width, double height) {
-        if (playerView == null) {
-            playerView = new ImageView();
-            boardGrid.add(playerView, move.getNewCol(), move.getNewRow());
-        } else {
-            boardGrid.getChildren().remove(playerView);
-            boardGrid.add(playerView, move.getNewCol(), move.getNewRow());
-        }
 
+        boardGrid.getChildren().remove(playerView);
         playerView.setImage(getPlayerImage(move.getDirection()));
         playerView.setFitWidth(width);
         playerView.setFitHeight(height);
+        boardGrid.add(playerView, move.getNewCol(), move.getNewRow());
     }
 
 
