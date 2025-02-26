@@ -7,5 +7,35 @@
 }
 
 .stateAnchor {
-    -fx-background-color: #e74c3c; /* Red color */
+    -fx-background-color: #333333; /* Dark gray background to match button */
+    -fx-border-color: #228B22; /* Bright green border to match the button */
+    -fx-border-width: 3px; /* Same border width as the button */
+    -fx-effect: dropshadow(gaussian, rgba(0, 255, 0, 0.6), 5, 0.0, 0, 0); /* Soft green shadow for retro vibe */
 }
+
+
+
+.gameButton {
+    -fx-background-color: #444444; /* Dark background for a pixelated, retro look */
+    -fx-text-fill: #ffffff; /* White text color for contrast */
+    -fx-font-size: 20px; /* Larger font for a bold, pixelated look */
+    -fx-font-family: "Monospaced", monospace; /* Use monospaced font for pixelated effect */
+    -fx-padding: 10px 20px; /* Fixed padding to prevent resizing */
+    -fx-border-color: #228B22; /* Bright green border to add to the retro vibe */
+    -fx-border-width: 3px; /* Thicker border for an old-school feel */
+    -fx-border-radius: 0px; /* No rounded corners, square edges for 2D game look */
+    -fx-effect: dropshadow(gaussian, rgba(0, 255, 0, 0.6), 5, 0.0, 0, 0); /* Shadow effect for button "depth" */
+}
+
+.gameButton:hover {
+    -fx-background-color: #555555; /* Slightly lighter gray when hovering */
+    -fx-text-fill: #00ff00; /* Change text color to bright green on hover */
+    -fx-effect: dropshadow(gaussian, rgba(0, 255, 0, 1), 10, 0.0, 0, 0); /* Glowing shadow effect on hover */
+}
+
+.gameButton:pressed {
+    -fx-background-color: #333333; /* Darker background when pressed */
+    -fx-border-color: #ff1111; /* Red border when the button is pressed */
+    -fx-text-fill: #ff0000; /* Red text when pressed */
+}
+

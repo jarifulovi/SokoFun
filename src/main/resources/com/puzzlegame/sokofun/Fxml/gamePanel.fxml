@@ -22,7 +22,7 @@
          </GridPane>
       </children></AnchorPane>
   <AnchorPane fx:id="stateAnchor" layoutX="700.0" maxHeight="600.0" maxWidth="300.0" minHeight="600.0" minWidth="300.0" styleClass="stateAnchor">
-    <Button fx:id="menuButton" layoutX="79.0" layoutY="138.0" mnemonicParsing="false" onAction="#onMenuButton" prefHeight="48.0" prefWidth="141.0" text="Menu" />
-    <Button fx:id="restartButton" layoutX="79.0" layoutY="217.0" mnemonicParsing="false" onAction="#onRestartButton" prefHeight="48.0" prefWidth="141.0" text="Restart" />
+    <Button fx:id="menuButton" layoutX="79.0" layoutY="138.0" mnemonicParsing="false" onAction="#onMenuButton" prefHeight="48.0" prefWidth="141.0" text="Menu" styleClass="gameButton"/>
+    <Button fx:id="restartButton" layoutX="79.0" layoutY="217.0" mnemonicParsing="false" onAction="#onRestartButton" prefHeight="48.0" prefWidth="141.0" text="Restart" styleClass="gameButton"/>
   </AnchorPane>
 </AnchorPane>

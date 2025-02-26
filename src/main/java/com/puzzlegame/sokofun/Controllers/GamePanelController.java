@@ -42,22 +42,22 @@ public class GamePanelController {
         // Reset elements
         menuButton.setFocusTraversable(false);
         restartButton.setFocusTraversable(false);
-        // Retrieve the board from file
-        // Initiate fields
-        int playerRow = 1;
-        int playerCol = 1;
-        int totalRow = 5;
-        int totalCol = 5;
-        boardLogic = new BoardLogic();
-        player = new Player(playerRow,playerCol);
-        gameBoardUI = new GameBoardUI(boardGrid,totalRow,totalCol);
-        gameBoardUI.renderInitialBoard(playerRow,playerCol, boardLogic.getBoard());
-
-
-        canUpdate = true;
         // Set handler
         boardGrid.setOnKeyPressed(this::update);
         boardGrid.setFocusTraversable(true);
+        // Initiate fields
+        int level = 1;
+        canUpdate = true;
+        boardLogic = new BoardLogic(level);
+        int[] playerPosition = boardLogic.getPlayerPosition();
+
+        int totalRow = boardLogic.getTotalRows();
+        int totalCol = boardLogic.getTotalCols();
+
+        player = new Player(playerPosition[0],playerPosition[1]);
+        gameBoardUI = new GameBoardUI(boardGrid,totalRow,totalCol);
+        gameBoardUI.renderInitialBoard(playerPosition[0],playerPosition[1], boardLogic.getBoard());
+
     }
 
     // Update
@@ -72,6 +72,8 @@ public class GamePanelController {
         boardLogic.updateBoard(move);
         player.updatePosition(move);
         gameBoardUI.renderBoard(boardLogic.getBoard(),move);
+        boolean isGameOver = boardLogic.isLevelComplete();
+        System.out.println(isGameOver);
 
         applyUpdateDelay();
 

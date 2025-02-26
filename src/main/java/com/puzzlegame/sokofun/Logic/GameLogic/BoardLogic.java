@@ -1,42 +1,34 @@
 package com.puzzlegame.sokofun.Logic.GameLogic;
 
+
 import com.puzzlegame.sokofun.Object.Move;
 import static com.puzzlegame.sokofun.Logic.Abstract.GameConstants.*;
 import static com.puzzlegame.sokofun.Logic.Abstract.GameConstants.NOTHING;
 
 public class BoardLogic {
 
-    private static final int[][] groundLayer = {
-            {FLOOR, FLOOR, FLOOR, FLOOR, FLOOR},
-            {FLOOR, SAND, SAND, SAND, FLOOR},
-            {FLOOR, SAND, FLOOR, SAND, FLOOR},
-            {FLOOR, SAND, SAND, SAND, FLOOR},
-            {FLOOR, FLOOR, FLOOR, FLOOR, FLOOR}
-    };
-
-    private static final int[][] blockLayer = {
-            {NOTHING, NOTHING, NOTHING, NOTHING, NOTHING},
-            {NOTHING, NOTHING, NOTHING, NOTHING, NOTHING},
-            {NOTHING, NOTHING, NOTHING, BOX, NOTHING},
-            {NOTHING, NOTHING, NOTHING, NOTHING, NOTHING},
-            {NOTHING, NOTHING, NOTHING, NOTHING, NOTHING}
-    };
-
-
-    private static final int[][] objectLayer = {
-            {NOTHING, NOTHING, NOTHING, NOTHING, NOTHING},
-            {NOTHING, NOTHING, NOTHING, NOTHING, NOTHING},
-            {NOTHING, NOTHING, COIN, STONE_GOAL, NOTHING},
-            {NOTHING, NOTHING, NOTHING, NOTHING, NOTHING},
-            {NOTHING, NOTHING, NOTHING, NOTHING, NOTHING}
-    };
 
     private int[][][] board;
+    private int totalRow;
+    private int totalCol;
+    private LevelLoader levelLoader;
 
-    public BoardLogic() {
-        initializeBoard();
+    public BoardLogic(int level) {
+        levelLoader = new LevelLoader(level);
+        board = levelLoader.getLevelBoard();
+        this.totalRow = board[0].length;
+        this.totalCol = board[0][0].length;
     }
 
+    public int[][][] getBoard() {
+        return board;
+    }
+    public int getTotalRows() {
+        return this.totalRow;
+    }
+    public int getTotalCols() {
+        return this.totalCol;
+    }
 
     // note block layer has both blocks and boxes
     public boolean isValidMove(Move move) {
@@ -88,40 +80,38 @@ public class BoardLogic {
     }
 
 
-
-
-
-
-    public int[][][] getBoard() {
-        return board;
-    }
-
-    public boolean isBlock(int type) {
-        return type >= STONE && type <= RED_BLOCK;
-    }
-    public boolean isWithinBound(int row, int col) {
-        return row >= 0 && row < board[0].length && col >= 0 && col < board[0][0].length;
-    }
-
-
-    private void initializeBoard() {
-        // load from file
-        board = mergeLayers();
-    }
-
-    public static int[][][] mergeLayers() {
-        int rows = groundLayer.length;
-        int cols = groundLayer[0].length;
-        int[][][] mergedBoard = new int[3][rows][cols];
-
-        for (int row = 0; row < rows; row++) {
-            for (int col = 0; col < cols; col++) {
-                mergedBoard[0][row][col] = groundLayer[row][col];
-                mergedBoard[1][row][col] = blockLayer[row][col];
-                mergedBoard[2][row][col] = objectLayer[row][col];
+    public boolean isLevelComplete() {
+        for (int row = 0; row < totalRow; row++) {
+            for (int col = 0; col < totalCol; col++) {
+                if (board[BLOCK_INDEX][row][col] == BOX &&
+                        !isGoal(board[OBJECT_INDEX][row][col])) {
+                    return false;
+                }
             }
         }
-
-        return mergedBoard;
+        return true;
     }
+
+
+    public int[] getPlayerPosition() {
+        for(int row = 0;row < totalRow; row++) {
+            for(int col = 0;col < totalCol; col++) {
+                if(board[BLOCK_INDEX][row][col] == PLAYER) return new int[]{row,col};
+            }
+        }
+        return new int[2];
+    }
+
+    private boolean isBlock(int type) {
+        return type >= STONE && type <= RED_BLOCK;
+    }
+
+    private boolean isGoal(int type) {
+        return type >= WOOD_GOAL && type <= STONE_GOAL;
+    }
+
+    private boolean isWithinBound(int row, int col) {
+        return row >= 0 && row < totalRow && col >= 0 && col < totalCol;
+    }
+
 }

@@ -74,7 +74,12 @@ public final class GameConstants {
     public static final String STONE_GOAL_PATH = "com/puzzlegame/sokofun/Assets/image-pack/PNG/Default size/Objects/stone_goal.png";
     public static final String COIN_GOAL_PATH = "com/puzzlegame/sokofun/Assets/image-pack/PNG/Default size/Objects/coin.png";
 
-
+    // level paths
+    // example : LEVEL_DIR_PATH + "Level01" + GROUND_LAYER_FILE_PATH
+    public static final String LEVEL_DIR_PATH = "/com/puzzlegame/sokofun/Levels/";
+    public static final String GROUND_LAYER_FILE_PATH = "/groundLayer.txt";
+    public static final String BLOCK_LAYER_FILE_PATH = "/blockLayer.txt";
+    public static final String OBJECT_LAYER_FILE_PATH = "/objectLayer.txt";
 }
 
 
