@@ -25,8 +25,8 @@ public class BoardLogic {
 
     private static final int[][] objectLayer = {
             {NOTHING, NOTHING, NOTHING, NOTHING, NOTHING},
-            {NOTHING, PLAYER, NOTHING, NOTHING, NOTHING},
-            {NOTHING, NOTHING, NOTHING, RED_GOAL, NOTHING},
+            {NOTHING, NOTHING, NOTHING, NOTHING, NOTHING},
+            {NOTHING, NOTHING, COIN, STONE_GOAL, NOTHING},
             {NOTHING, NOTHING, NOTHING, NOTHING, NOTHING},
             {NOTHING, NOTHING, NOTHING, NOTHING, NOTHING}
     };
@@ -55,8 +55,8 @@ public class BoardLogic {
 
 
         if (blockType == BOX) {
-            int nextRow = newRow + move.getDirectionRow();
-            int nextCol = newCol + move.getDirectionCol();
+            int nextRow = move.getPushedRow();
+            int nextCol = move.getPushedCol();
 
             if (!isWithinBound(nextRow, nextCol)) {
                 return false;
@@ -72,8 +72,21 @@ public class BoardLogic {
 
 
     public void updateBoard(Move move) {
-        // update the board based on move
+
+        int newRow = move.getNewRow();
+        int newCol = move.getNewCol();
+        move.setIsPush(false);
+
+        if (board[BLOCK_INDEX][newRow][newCol] == BOX) {
+            move.setIsPush(true);
+            board[BLOCK_INDEX][newRow][newCol] = NOTHING;
+            int nextRow = move.getPushedRow();
+            int nextCol = move.getPushedCol();
+            board[BLOCK_INDEX][nextRow][nextCol] = BOX;
+        }
+
     }
+
 
 
 

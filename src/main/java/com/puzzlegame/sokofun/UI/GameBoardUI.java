@@ -4,6 +4,7 @@ import com.puzzlegame.sokofun.Logic.Abstract.AssetLoader;
 import com.puzzlegame.sokofun.Logic.Abstract.GameConstants;
 import com.puzzlegame.sokofun.Logic.Abstract.ImagePathMap;
 import com.puzzlegame.sokofun.Object.Move;
+import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
@@ -36,30 +37,76 @@ public class GameBoardUI {
         configureGrid(numCols, numRows, tileWidth, tileHeight);
         boardGrid.getChildren().clear();
 
-        renderLayer(board[GameConstants.GROUND_INDEX], tileWidth, tileHeight);
-        renderLayer(board[GameConstants.BLOCK_INDEX], tileWidth, tileHeight);
-        renderLayer(board[GameConstants.OBJECT_INDEX], tileWidth, tileHeight);
+        renderLayer(board[GameConstants.GROUND_INDEX]);
+        renderLayer(board[GameConstants.BLOCK_INDEX]);
+        renderLayer(board[GameConstants.OBJECT_INDEX]);
         playerUI.renderInitialPlayer(playerRow,playerCol,tileWidth,tileHeight);
     }
 
-    public void renderBoard(Move move) {
-        // render new board based on [][][] board
-        // render only box and objects
+    public void renderBoard(int[][][] board,Move move) {
+        // the board is updated
+        moveBox(board,move);
         playerUI.renderPlayer(move,tileWidth,tileHeight);
-        // optimize render by checking previous board (in future)
+    }
+
+    private void moveBox(int[][][] board,Move move) {
+
+        int newRow = move.getNewRow();
+        int newCol = move.getNewCol();
+
+
+        if(move.getIsPushed()) {
+            // it must be a box in this position
+            ImageView boxView = (ImageView) getChildAt(GameConstants.BOX,newRow,newCol);
+
+            boardGrid.getChildren().remove(boxView);
+            int nextRow = move.getPushedRow();
+            int nextCol = move.getPushedCol();
+            int goalType = board[GameConstants.OBJECT_INDEX][nextRow][nextCol];
+
+
+            boxView = getValidBox(goalType,nextRow,nextCol);
+
+            boardGrid.add(boxView,nextRow,nextCol);
+            GridPane.setRowIndex(boxView, nextRow);
+            GridPane.setColumnIndex(boxView, nextCol);
+        }
+    }
+
+    private ImageView getValidBox(int goalType,int row,int col) {
+        Image boxImage = switch (goalType) {
+            case GameConstants.STONE_GOAL -> AssetLoader.getImage(GameConstants.STONE_BOX_PATH);
+            case GameConstants.BLUE_GOAL -> AssetLoader.getImage(GameConstants.BLUE_BOX_PATH);
+            case GameConstants.GREEN_GOAL -> AssetLoader.getImage(GameConstants.GREEN_BOX_PATH);
+            case GameConstants.RED_GOAL -> AssetLoader.getImage(GameConstants.RED_BOX_PATH);
+            default -> AssetLoader.getImage(GameConstants.WOOD_BOX_PATH);
+        };
+        ImageView boxView = getTileView(boxImage,GameConstants.BOX,row,col);
+
+        return boxView;
+    }
+
+    private Node getChildAt(int type, int row, int col) {
+        for (Node child : boardGrid.getChildren()) {
+            if(GridPane.getRowIndex(child) == row && GridPane.getColumnIndex(child) == col) {
+                String id = child.getId();
+                if (id != null) {
+                    String[] parts = id.split("_");
+                    int childType = Integer.parseInt(parts[0]);
+
+                    if (childType == type) {
+                        System.out.println(childType);
+                        return child;
+                    }
+                }
+            }
+        }
+
+        return null;
     }
 
 
 
-
-    private double calculateTileWidth(int numCols) {
-        return (double) GameConstants.BOARD_WIDTH / numCols;
-    }
-
-
-    private double calculateTileHeight(int numRows) {
-        return (double) GameConstants.BOARD_HEIGHT / numRows;
-    }
 
     private void configureGrid(int numCols, int numRows, double tileWidth, double tileHeight) {
         boardGrid.getColumnConstraints().clear();
@@ -78,21 +125,37 @@ public class GameBoardUI {
         }
     }
     // Renders a given layer (ground, block, or object)
-    private void renderLayer(int[][] layer, double tileWidth, double tileHeight) {
+    private void renderLayer(int[][] layer) {
         for (int row = 0; row < layer.length; row++) {
             for (int col = 0; col < layer[row].length; col++) {
                 if (willRender(layer[row][col])) {
-                    Image block = ImagePathMap.getImage(layer[row][col]);
-                    ImageView blockView = new ImageView(block);
-                    blockView.setFitWidth(tileWidth);
-                    blockView.setFitHeight(tileHeight);
-                    boardGrid.add(blockView, col, row);
+                    Image tileImage = ImagePathMap.getImage(layer[row][col]);
+                    ImageView tileView = getTileView(tileImage,layer[row][col],row,col);
+                    boardGrid.add(tileView, col, row);
                 }
             }
         }
     }
+
+    private ImageView getTileView(Image tileImage,int type, int row, int col) {
+        ImageView tileView = new ImageView(tileImage);
+        tileView.setFitWidth(tileWidth);
+        tileView.setFitHeight(tileHeight);
+        tileView.setId(type + "_" + row + "_" + col);
+        return tileView;
+    }
+
     private boolean willRender(int block) {
         return block != GameConstants.NOTHING && block != GameConstants.PLAYER;
+    }
+
+    private double calculateTileWidth(int numCols) {
+        return (double) GameConstants.BOARD_WIDTH / numCols;
+    }
+
+
+    private double calculateTileHeight(int numRows) {
+        return (double) GameConstants.BOARD_HEIGHT / numRows;
     }
 
 }

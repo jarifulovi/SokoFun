@@ -8,6 +8,7 @@ public class Move {
     private int newRow;
     private int newCol;
     private int direction;
+    private boolean isPushed;
 
     public Move(int prevRow, int prevCol, int newRow, int newCol, int direction) {
         this.prevRow = prevRow;
@@ -15,6 +16,15 @@ public class Move {
         this.newRow = newRow;
         this.newCol = newCol;
         this.direction = direction;
+        this.isPushed = false;
+    }
+
+    public void setIsPush(boolean flag) {
+        this.isPushed = flag;
+    }
+
+    public boolean getIsPushed() {
+        return isPushed;
     }
 
     public int getPrevRow() {
@@ -37,8 +47,16 @@ public class Move {
         return direction;
     }
 
+    public int getPushedRow() {
+        return newRow + getDirectionRow();
+    }
 
-    public int getDirectionRow() {
+    public int getPushedCol() {
+        return newCol + getDirectionCol();
+    }
+
+
+    private int getDirectionRow() {
         return switch (direction) {
             case GameConstants.UP -> -1;
             case GameConstants.DOWN -> 1;
@@ -46,7 +64,7 @@ public class Move {
         };
     }
 
-    public int getDirectionCol() {
+    private int getDirectionCol() {
         return switch (direction) {
             case GameConstants.LEFT -> -1;
             case GameConstants.RIGHT -> 1;

@@ -44,8 +44,8 @@ public class GamePanelController {
         restartButton.setFocusTraversable(false);
         // Retrieve the board from file
         // Initiate fields
-        int playerRow = 2;
-        int playerCol = 2;
+        int playerRow = 1;
+        int playerCol = 1;
         int totalRow = 5;
         int totalCol = 5;
         boardLogic = new BoardLogic();
@@ -68,9 +68,10 @@ public class GamePanelController {
         Move move = player.getMove(event);
         boolean isValidMove = boardLogic.isValidMove(move);
         if(!isValidMove) return;
-        // update board
+
+        boardLogic.updateBoard(move);
         player.updatePosition(move);
-        gameBoardUI.renderBoard(move);
+        gameBoardUI.renderBoard(boardLogic.getBoard(),move);
 
         applyUpdateDelay();
 

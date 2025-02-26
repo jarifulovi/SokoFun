@@ -19,7 +19,7 @@ public final class ImagePathMap {
         IMAGE_PATH_MAP.put(GameConstants.BOX, GameConstants.WOOD_BOX_PATH);
         IMAGE_PATH_MAP.put(GameConstants.STONE, GameConstants.STONE_PATH);
         IMAGE_PATH_MAP.put(GameConstants.STONE_BLOCK, GameConstants.STONE_BLOCK_PATH);
-        IMAGE_PATH_MAP.put(GameConstants.STONE_GOAL, GameConstants.WOOD_GOAL_PATH);
+        IMAGE_PATH_MAP.put(GameConstants.STONE_GOAL, GameConstants.STONE_GOAL_PATH);
         IMAGE_PATH_MAP.put(GameConstants.RED, GameConstants.RED_PATH);
         IMAGE_PATH_MAP.put(GameConstants.RED_BLOCK, GameConstants.RED_BLOCK_PATH);
         IMAGE_PATH_MAP.put(GameConstants.RED_GOAL, GameConstants.RED_GOAL_PATH);
