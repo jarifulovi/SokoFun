@@ -9,6 +9,8 @@ public final class GameConstants {
     public static final int BOARD_WIDTH = 700;
     public static final int BOARD_HEIGHT = 600;
 
+    public static final int TOTAL_LEVELS = 2;
+
     public static final int GROUND_INDEX = 0;
     public static final int BLOCK_INDEX = 1;
     public static final int OBJECT_INDEX = 2;
@@ -41,6 +43,11 @@ public final class GameConstants {
     public static final int DOWN = 2;
     public static final int LEFT = 3;
     public static final int RIGHT = 4;
+
+    // Fxml paths
+    public static final String GAME_PANEL_FXML = "Fxml/gamePanel.fxml";
+    public static final String MENU_PANEL_FXML = "Fxml/menuPanel.fxml";
+    public static final String OPTIONS_PANEL_FXML = "Fxml/optionsPanel.fxml";
 
     // Asset paths
 
@@ -75,7 +82,6 @@ public final class GameConstants {
     public static final String COIN_GOAL_PATH = "com/puzzlegame/sokofun/Assets/image-pack/PNG/Default size/Objects/coin.png";
 
     // level paths
-    // example : LEVEL_DIR_PATH + "Level01" + GROUND_LAYER_FILE_PATH
     public static final String LEVEL_DIR_PATH = "/com/puzzlegame/sokofun/Levels/";
     public static final String GROUND_LAYER_FILE_PATH = "/groundLayer.txt";
     public static final String BLOCK_LAYER_FILE_PATH = "/blockLayer.txt";

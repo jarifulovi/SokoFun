@@ -1,11 +1,14 @@
 package com.puzzlegame.sokofun.Controllers;
 
 
+import com.puzzlegame.sokofun.Logic.Abstract.FxmlLoader;
+import com.puzzlegame.sokofun.Logic.Abstract.GameConstants;
 import com.puzzlegame.sokofun.Logic.GameLogic.BoardLogic;
 import com.puzzlegame.sokofun.Logic.GameLogic.Player;
 import com.puzzlegame.sokofun.Object.Move;
 import com.puzzlegame.sokofun.UI.GameBoardUI;
 import javafx.animation.PauseTransition;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
@@ -41,15 +44,10 @@ public class GamePanelController {
     private BoardLogic boardLogic;
     private boolean canUpdate;
     private boolean isGameOver;
+    private int level;
 
-    @FXML
-    public void initialize() {
-        System.out.println("game panel started");
-        resetAndSetFocus();
-        // Set handler
-        boardGrid.setOnKeyPressed(this::update);
-        // Initiate fields
-        int level = 1;
+    public void initializeGame(int level) {
+        this.level = level;
         canUpdate = true;
         isGameOver = false;
         boardLogic = new BoardLogic(level);
@@ -64,6 +62,14 @@ public class GamePanelController {
 
         // Render the board
         gameBoardUI.renderInitialBoard(playerPosition[0],playerPosition[1], boardLogic.getBoard());
+
+    }
+    @FXML
+    public void initialize() {
+        System.out.println("game panel started");
+        resetAndSetFocus();
+        // Set handler
+        boardGrid.setOnKeyPressed(this::update);
 
     }
 
@@ -115,9 +121,13 @@ public class GamePanelController {
     }
 
     @FXML
-    private void onNextLevelButton() {
-        System.out.println("Next level");
-        // next level logic
+    private void onNextLevelButton(ActionEvent event) {
+        if(level < GameConstants.TOTAL_LEVELS) {
+            FxmlLoader.loadGamePanel(GameConstants.GAME_PANEL_FXML,event,level+1);
+        } else {
+            System.out.println("Reacted total level");
+        }
+
     }
 
     private void applyUpdateDelay() {
