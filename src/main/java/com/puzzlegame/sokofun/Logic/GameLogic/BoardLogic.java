@@ -9,15 +9,21 @@ public class BoardLogic {
 
 
     private int[][][] board;
+    private final int[][][] initialBoard;
     private int totalRow;
     private int totalCol;
     private LevelLoader levelLoader;
 
     public BoardLogic(int level) {
         levelLoader = new LevelLoader(level);
-        board = levelLoader.getLevelBoard();
+        initialBoard = levelLoader.getLevelBoard();
+        board = copyBoard(initialBoard);
         this.totalRow = board[0].length;
         this.totalCol = board[0][0].length;
+    }
+
+    public void resetBoard() {
+        board = copyBoard(initialBoard);
     }
 
     public int[][][] getBoard() {
@@ -113,5 +119,20 @@ public class BoardLogic {
     private boolean isWithinBound(int row, int col) {
         return row >= 0 && row < totalRow && col >= 0 && col < totalCol;
     }
+
+    private int[][][] copyBoard(int[][][] board) {
+        int rows = board.length;
+        int cols = board[0].length;
+        int depth = board[0][0].length;
+        int[][][] newBoard = new int[rows][cols][depth];
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                System.arraycopy(board[i][j], 0, newBoard[i][j], 0, depth);
+            }
+        }
+        return newBoard;
+    }
+
 
 }

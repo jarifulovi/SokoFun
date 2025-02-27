@@ -27,27 +27,31 @@ public class GamePanelController {
     private Button menuButton;
     @FXML
     private Button restartButton;
-
+    @FXML
+    private AnchorPane gameOverAnchor;
+    @FXML
+    private Button playAgainButton;
+    @FXML
+    private Button nextLevelButton;
 
     // Controller fields
+    private final int updateDelay = 100;
     private Player player;
     private GameBoardUI gameBoardUI;
     private BoardLogic boardLogic;
     private boolean canUpdate;
-    private final int updateDelay = 100;
+    private boolean isGameOver;
 
     @FXML
     public void initialize() {
         System.out.println("game panel started");
-        // Reset elements
-        menuButton.setFocusTraversable(false);
-        restartButton.setFocusTraversable(false);
+        resetAndSetFocus();
         // Set handler
         boardGrid.setOnKeyPressed(this::update);
-        boardGrid.setFocusTraversable(true);
         // Initiate fields
         int level = 1;
         canUpdate = true;
+        isGameOver = false;
         boardLogic = new BoardLogic(level);
         int[] playerPosition = boardLogic.getPlayerPosition();
 
@@ -56,6 +60,9 @@ public class GamePanelController {
 
         player = new Player(playerPosition[0],playerPosition[1]);
         gameBoardUI = new GameBoardUI(boardGrid,totalRow,totalCol);
+        resetGameOverUI();
+
+        // Render the board
         gameBoardUI.renderInitialBoard(playerPosition[0],playerPosition[1], boardLogic.getBoard());
 
     }
@@ -63,7 +70,7 @@ public class GamePanelController {
     // Update
     private void update(KeyEvent event) {
 
-        if(!canUpdate) return;
+        if(!canUpdate || isGameOver) return;
 
         Move move = player.getMove(event);
         boolean isValidMove = boardLogic.isValidMove(move);
@@ -72,11 +79,26 @@ public class GamePanelController {
         boardLogic.updateBoard(move);
         player.updatePosition(move);
         gameBoardUI.renderBoard(boardLogic.getBoard(),move);
-        boolean isGameOver = boardLogic.isLevelComplete();
-        System.out.println(isGameOver);
+
+        isGameOver = boardLogic.isLevelComplete();
+
+        if(isGameOver)
+            setGameOverUI();
 
         applyUpdateDelay();
 
+    }
+
+    private void restartGame() {
+        resetAndSetFocus();
+        isGameOver = false;
+        boardLogic.resetBoard();
+        int[] playerPosition = boardLogic.getPlayerPosition();
+
+
+        player = new Player(playerPosition[0],playerPosition[1]);
+        gameBoardUI.restartUI(playerPosition[0],playerPosition[1], boardLogic.getBoard());
+        resetGameOverUI();
     }
 
 
@@ -89,10 +111,14 @@ public class GamePanelController {
     @FXML
     private void onRestartButton() {
         System.out.println("restart game");
-        initialize();
+        restartGame();
     }
 
-
+    @FXML
+    private void onNextLevelButton() {
+        System.out.println("Next level");
+        // next level logic
+    }
 
     private void applyUpdateDelay() {
         canUpdate = false;
@@ -101,5 +127,19 @@ public class GamePanelController {
         pause.play();
     }
 
+    private void setGameOverUI() {
+        gameOverAnchor.setVisible(true);
+        gameOverAnchor.setMouseTransparent(false);
+    }
 
+    private void resetGameOverUI() {
+        gameOverAnchor.setVisible(false);
+        gameOverAnchor.setMouseTransparent(true);
+    }
+
+    private void resetAndSetFocus() {
+        menuButton.setFocusTraversable(false);
+        restartButton.setFocusTraversable(false);
+        boardGrid.setFocusTraversable(true);
+    }
 }

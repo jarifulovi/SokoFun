@@ -16,6 +16,10 @@ public class PlayerUI {
         this.boardGrid = boardGrid;
     }
 
+    public void setBoardGrid(GridPane boardGrid) {
+        this.boardGrid = boardGrid;
+    }
+
     public void renderInitialPlayer(int playerRow, int playerCol, double width, double height) {
         playerView = new ImageView(getPlayerImage(GameConstants.DOWN));
         playerView.setFitWidth(width);

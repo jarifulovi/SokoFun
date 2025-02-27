@@ -31,6 +31,11 @@ public class GameBoardUI {
         this.playerUI = new PlayerUI(boardGrid);
     }
 
+    public void restartUI(int playerRow,int playerCol,int[][][] board) {
+        this.playerUI.setBoardGrid(boardGrid);
+        renderInitialBoard(playerRow,playerCol,board);
+    }
+
     public void renderInitialBoard(int playerRow,int playerCol,int[][][] board) {
 
         configureGrid();
@@ -133,21 +138,25 @@ public class GameBoardUI {
 
 
     private void configureGrid() {
-        boardGrid.getColumnConstraints().clear();
-        boardGrid.getRowConstraints().clear();
 
-        for (int col = 0; col < numCols; col++) {
-            ColumnConstraints colConstraints = new ColumnConstraints();
-            colConstraints.setMinWidth(tileWidth);
-            boardGrid.getColumnConstraints().add(colConstraints);
+        if (boardGrid.getColumnConstraints().isEmpty()) {
+            for (int col = 0; col < numCols; col++) {
+                ColumnConstraints colConstraints = new ColumnConstraints();
+                colConstraints.setMinWidth(tileWidth);
+                boardGrid.getColumnConstraints().add(colConstraints);
+            }
         }
 
-        for (int row = 0; row < numRows; row++) {
-            RowConstraints rowConstraints = new RowConstraints();
-            rowConstraints.setMinHeight(tileHeight);
-            boardGrid.getRowConstraints().add(rowConstraints);
+
+        if (boardGrid.getRowConstraints().isEmpty()) {
+            for (int row = 0; row < numRows; row++) {
+                RowConstraints rowConstraints = new RowConstraints();
+                rowConstraints.setMinHeight(tileHeight);
+                boardGrid.getRowConstraints().add(rowConstraints);
+            }
         }
     }
+
 
 
     private ImageView getTileView(Image tileImage,int type, int row, int col) {
