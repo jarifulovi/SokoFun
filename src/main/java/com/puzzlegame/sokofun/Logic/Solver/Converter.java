@@ -37,8 +37,8 @@ public class Converter {
 
         Set<Position> boxPositions = new HashSet<>();
 
-        for (int row = 0; row < board.length; row++) {
-            for (int col = 0; col < board[row].length; col++) {
+        for (int row = 0; row < boardState.getTotalRows(); row++) {
+            for (int col = 0; col < boardState.getTotalCols(); col++) {
                 if (board[GameConstants.BLOCK_INDEX][row][col] == GameConstants.BOX) {
                     Position position = new Position(row, col);
                     boxPositions.add(position);
@@ -53,8 +53,8 @@ public class Converter {
 
         Set<Position> goalPositions = new HashSet<>();
 
-        for (int row = 0; row < board.length; row++) {
-            for (int col = 0; col < board[row].length; col++) {
+        for (int row = 0; row < boardState.getTotalRows(); row++) {
+            for (int col = 0; col < boardState.getTotalCols(); col++) {
                 if (Utils.isGoal(board[GameConstants.OBJECT_INDEX][row][col])) {
                     Position position = new Position(row, col);
                     goalPositions.add(position);
@@ -69,8 +69,8 @@ public class Converter {
 
         Set<Position> wallPositions = new HashSet<>();
 
-        for (int row = 0; row < board.length; row++) {
-            for (int col = 0; col < board[row].length; col++) {
+        for (int row = 0; row < boardState.getTotalRows(); row++) {
+            for (int col = 0; col < boardState.getTotalCols(); col++) {
                 if (Utils.isWall(board[GameConstants.BLOCK_INDEX][row][col])) {
                     Position position = new Position(row, col);
                     wallPositions.add(position);

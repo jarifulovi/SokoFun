@@ -42,4 +42,27 @@ public abstract class Utils {
         return new int[2];
     }
 
+    public static void displayBoard(int[][][] board) {
+        if (board == null || board.length == 0) {
+            System.out.println("Empty board.");
+            return;
+        }
+
+        for (int z = 0; z < board.length; z++) {
+            if (board.length > 1) {
+                System.out.println("Layer " + z + ":");
+            }
+
+            for (int y = 0; y < board[z].length; y++) {
+                for (int x = 0; x < board[z][y].length; x++) {
+                    System.out.print(board[z][y][x] + " ");
+                }
+                System.out.println();
+            }
+            if (board.length > 1){
+                System.out.println("-----");
+            }
+
+        }
+    }
 }
