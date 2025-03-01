@@ -39,10 +39,11 @@ public final class GameConstants {
     public static final int COIN = 17;
 
     // Game controls
-    public static final int UP = 1;
+    public static final int UP = 0;
+    public static final int RIGHT = 1;
     public static final int DOWN = 2;
     public static final int LEFT = 3;
-    public static final int RIGHT = 4;
+
 
     // Fxml paths
     public static final String GAME_PANEL_FXML = "Fxml/gamePanel.fxml";

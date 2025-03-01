@@ -1,21 +1,19 @@
 package com.puzzlegame.sokofun.Logic.Solver;
 
-
 import com.puzzlegame.sokofun.Logic.Abstract.Utils;
 import com.puzzlegame.sokofun.Object.Move;
-import com.puzzlegame.sokofun.Object.Position;
 
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
+
 
 public class BoardState {
 
-    private Position playerPosition;
-    private Set<Position> boxPositions;
-    private Set<Position> goalPositions;
-    private Set<Position> wallPositions;
+    private int playerPosition;
+    private Set<Integer> boxPositions;
+    private Set<Integer> goalPositions;
+    private Set<Integer> wallPositions;
     private int totalCols;
     private int totalRows;
 
@@ -23,6 +21,7 @@ public class BoardState {
         this.boxPositions = new HashSet<>();
         this.goalPositions = new HashSet<>();
         this.wallPositions = new HashSet<>();
+        playerPosition = -1;
     }
 
     public void setTotalCols(int totalCols) {
@@ -41,43 +40,43 @@ public class BoardState {
         return totalRows;
     }
 
-    public void setPlayerPosition(Position playerPosition) {
+    public void setPlayerPosition(int playerPosition) {
         this.playerPosition = playerPosition;
     }
 
-    public void setBoxPositions(Set<Position> boxPositions) {
+    public void setBoxPositions(Set<Integer> boxPositions) {
         this.boxPositions = boxPositions;
     }
 
-    public void setGoalPositions(Set<Position> goalPositions) {
+    public void setGoalPositions(Set<Integer> goalPositions) {
         this.goalPositions = goalPositions;
     }
 
-    public void setWallPositions(Set<Position> wallPositions) {
+    public void setWallPositions(Set<Integer> wallPositions) {
         this.wallPositions = wallPositions;
     }
 
-    public Position getPlayerPosition() {
+    public int getPlayerPosition() {
         return playerPosition;
     }
 
-    public Set<Position> getBoxPositions() {
+    public Set<Integer> getBoxPositions() {
         return boxPositions;
     }
 
-    public Set<Position> getGoalPositions() {
+    public Set<Integer> getGoalPositions() {
         return goalPositions;
     }
 
-    public Set<Position> getWallPositions() {
+    public Set<Integer> getWallPositions() {
         return wallPositions;
     }
 
 
-    public boolean isSucceed() {
 
-        for (Position boxPos : boxPositions) {
-            if (!goalPositions.contains(boxPos)) {
+    public boolean isSucceed() {
+        for (int boxIndex : boxPositions) {
+            if (!goalPositions.contains(boxIndex)) {
                 return false;
             }
         }
@@ -85,18 +84,19 @@ public class BoardState {
     }
 
 
-    public void applyMove(Move move) {
 
-        this.playerPosition = new Position(move.getNewRow(), move.getNewCol());
+    public void applyMove(Move move) {
+        this.playerPosition = SolverUtils.toIndex(move.getNewRow(), move.getNewCol(), totalCols);
 
         if (move.getIsPushed()) {
-            Position boxPosition = new Position(move.getNewRow(), move.getNewCol());
-            this.boxPositions.remove(boxPosition);
+            int boxIndex = SolverUtils.toIndex(move.getNewRow(), move.getNewCol(), totalCols);
+            this.boxPositions.remove(boxIndex);
 
-            Position newBoxPosition = new Position(move.getPushedRow(), move.getPushedCol());
-            this.boxPositions.add(newBoxPosition);
+            int newBoxIndex = SolverUtils.toIndex(move.getPushedRow(), move.getPushedCol(), totalCols);
+            this.boxPositions.add(newBoxIndex);
         }
     }
+
 
 
 
@@ -105,13 +105,9 @@ public class BoardState {
         copy.totalRows = this.totalRows;
         copy.totalCols = this.totalCols;
 
-        copy.playerPosition = (this.playerPosition != null)
-                ? new Position(this.playerPosition.getRow(), this.playerPosition.getCol())
-                : null;
+        copy.playerPosition = this.playerPosition;
 
-
-        copy.boxPositions = this.boxPositions.stream()
-                .map(pos -> new Position(pos.getRow(), pos.getCol())).collect(Collectors.toUnmodifiableSet());
+        copy.boxPositions = new HashSet<>(this.boxPositions);
 
         copy.goalPositions = Collections.unmodifiableSet(this.goalPositions);
         copy.wallPositions = Collections.unmodifiableSet(this.wallPositions);
@@ -122,18 +118,21 @@ public class BoardState {
     @Override
     public int hashCode() {
         int result = 17;
-        result = 31 * result + (playerPosition != null ? playerPosition.hashCode() : 0);
+        result = 31 * result + Integer.hashCode(playerPosition);
         result = 31 * result + (boxPositions != null ? boxPositions.hashCode() : 0);
         return result;
     }
 
-    public boolean isFreeSpace(Position position) {
 
-        if (!Utils.isWithinBound(position.getRow(), position.getCol(), totalRows, totalCols)) {
+    public boolean isFreeSpace(int index) {
+        int row = SolverUtils.getRow(index, totalCols);
+        int col = SolverUtils.getCol(index, totalCols);
+
+        if (!Utils.isWithinBound(row, col, totalRows, totalCols)) {
             return false;
         }
 
-        return !wallPositions.contains(position) && !boxPositions.contains(position);
+        return !wallPositions.contains(index) && !boxPositions.contains(index);
     }
 
 }

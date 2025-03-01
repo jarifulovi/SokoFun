@@ -1,8 +1,8 @@
 package com.puzzlegame.sokofun.Logic.Solver;
 
+import com.puzzlegame.sokofun.Logic.Abstract.GameConstants;
 import com.puzzlegame.sokofun.Logic.GameLogic.LevelLoader;
 import com.puzzlegame.sokofun.Object.Move;
-import com.puzzlegame.sokofun.Object.Position;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -38,46 +38,36 @@ public class Solver {
 
     private void generateAllPossibleMove() {
         // check state to gen moves
-        Set<Position> pushablePositions = getAllPushablePositions();
+        Set<Integer> pushablePositions = getAllPushablePositions();
         // check pathfinding to reach
         // return the move
     }
 
-    private Set<Position> getAllPushablePositions() {
-        Set<Position> pushablePositions = new HashSet<>();
+    private Set<Integer> getAllPushablePositions() {
+        Set<Integer> pushablePositions = new HashSet<>();
 
-        for(Position position : boardState.getBoxPositions()) {
+        for(Integer position : boardState.getBoxPositions()) {
             getPushPosition(position,pushablePositions);
         }
         return pushablePositions;
     }
 
-    private void getPushPosition(Position boxPosition,Set<Position> pushablePositions) {
+    private void getPushPosition(int boxPosition, Set<Integer> pushablePositions) {
+        int[] directions = SolverUtils.getDirections(boxPosition, boardState);
 
-        int[][] offsets = {
-                {-1, 0},  // Up
-                {0, -1},  // Left
-        };
+        if (boardState.isFreeSpace(directions[GameConstants.UP])
+                && boardState.isFreeSpace(directions[GameConstants.DOWN])) {
+            pushablePositions.add(directions[GameConstants.UP]);
+            pushablePositions.add(directions[GameConstants.DOWN]);
+        }
 
-        for (int[] offset : offsets) {
-            int directionRow = offset[0];
-            int directionCol = offset[1];
-
-            int pushRow = boxPosition.getRow() + directionRow;
-            int pushCol = boxPosition.getCol() + directionCol;
-            Position pos = new Position(pushRow,pushCol);
-
-            int oppositeRow = boxPosition.getRow() - directionRow;
-            int oppositeCol = boxPosition.getCol() - directionCol;
-            Position oppositePos = new Position(oppositeRow, oppositeCol);
-
-
-            if (boardState.isFreeSpace(pos) && boardState.isFreeSpace(oppositePos)) {
-                pushablePositions.add(pos);
-                pushablePositions.add(oppositePos);
-            }
+        if (boardState.isFreeSpace(directions[GameConstants.LEFT])
+                && boardState.isFreeSpace(directions[GameConstants.RIGHT])) {
+            pushablePositions.add(directions[GameConstants.LEFT]);
+            pushablePositions.add(directions[GameConstants.RIGHT]);
         }
     }
+
 
     private void pathFinding() {
         // check success
@@ -98,11 +88,12 @@ public class Solver {
         //Utils.displayBoard(board);
         Converter converter = new Converter(board);
         BoardState boardState = converter.getSolverState();
+
         SolverUtils.displayBoxPos(boardState.getBoxPositions(), boardState.getTotalRows(), boardState.getTotalCols());
         Solver solver = new Solver();
         solver.setBoardState(boardState);
         SolverUtils.displayPushes(solver.getAllPushablePositions(), boardState.getTotalRows(), boardState.getTotalCols());
-        System.out.println(solver.getAllPushablePositions().size());
+        //System.out.println(solver.getAllPushablePositions().size());
     }
 
     // Notes
