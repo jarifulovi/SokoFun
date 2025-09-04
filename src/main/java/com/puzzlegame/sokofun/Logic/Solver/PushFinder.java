@@ -23,13 +23,15 @@ public class PushFinder {
     private void getPushPosition(BoardState boardState, int boxPosition, Set<Integer> pushablePositions) {
         int[] directions = SolverUtils.getDirections(boxPosition, boardState);
 
-        if (boardState.isFreeSpace(directions[GameConstants.UP])
+        if (directions[GameConstants.UP] != -1 && directions[GameConstants.DOWN] != -1
+                && boardState.isFreeSpace(directions[GameConstants.UP])
                 && boardState.isFreeSpace(directions[GameConstants.DOWN])) {
             pushablePositions.add(directions[GameConstants.UP]);
             pushablePositions.add(directions[GameConstants.DOWN]);
         }
 
-        if (boardState.isFreeSpace(directions[GameConstants.LEFT])
+        if (directions[GameConstants.LEFT] != -1 && directions[GameConstants.RIGHT] != -1
+                && boardState.isFreeSpace(directions[GameConstants.LEFT])
                 && boardState.isFreeSpace(directions[GameConstants.RIGHT])) {
             pushablePositions.add(directions[GameConstants.LEFT]);
             pushablePositions.add(directions[GameConstants.RIGHT]);

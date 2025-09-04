@@ -55,6 +55,21 @@ public class Move {
         return newCol + getDirectionCol();
     }
 
+    @Override
+    public String toString() {
+        return "Move{" +
+                "prevRow=" + prevRow +
+                ", prevCol=" + prevCol +
+                ", newRow=" + newRow +
+                ", newCol=" + newCol +
+                ", direction=" + (direction == GameConstants.UP ? "UP" :
+                                direction == GameConstants.DOWN ? "DOWN" :
+                                direction == GameConstants.LEFT ? "LEFT" :
+                                direction == GameConstants.RIGHT ? "RIGHT" : "UNKNOWN") +
+                ", isPushed=" + isPushed +
+                '}';
+    }
+
 
     private int getDirectionRow() {
         return switch (direction) {

@@ -5,6 +5,7 @@ import com.puzzlegame.sokofun.Object.Move;
 
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 
@@ -153,19 +154,22 @@ public class BoardState {
     }
 
     @Override
-    public int hashCode() {
-        int result = 17;
-        result = 31 * result + Integer.hashCode(playerPosition);
-        result = 31 * result + (boxPositions != null ? boxPositions.hashCode() : 0);
-        return result;
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        
+        BoardState that = (BoardState) obj;
+        return playerPosition == that.playerPosition &&
+               totalCols == that.totalCols &&
+               totalRows == that.totalRows &&
+               Objects.equals(boxPositions, that.boxPositions) &&
+               Objects.equals(goalPositions, that.goalPositions) &&
+               Objects.equals(wallPositions, that.wallPositions);
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (!(obj instanceof BoardState other)) return false;
-        return playerPosition == other.playerPosition &&
-                boxPositions.equals(other.boxPositions);
+    public int hashCode() {
+        return Objects.hash(playerPosition, boxPositions, goalPositions, wallPositions, totalCols, totalRows);
     }
 
 
