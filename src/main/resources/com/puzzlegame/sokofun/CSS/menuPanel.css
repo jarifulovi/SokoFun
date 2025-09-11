@@ -1,0 +1,46 @@
+/* ================================
+   Menu Panel Styling (menuPanel.css)
+   ================================ */
+
+/* Background for the whole menu */
+.menuAnchor {
+    -fx-background-color: linear-gradient(to bottom, #111111, #222222); /* Dark gradient background */
+}
+
+/* Title label styling */
+.menuTitle {
+    -fx-text-fill: #00ff00; /* Bright green retro-style text */
+    -fx-font-size: 40px;
+    -fx-font-family: "Monospaced", monospace;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, rgba(0,255,0,0.8), 10, 0.5, 0, 0); /* glowing green effect */
+}
+
+/* Menu buttons */
+.menuButton {
+    -fx-background-color: #222222; /* Slightly lighter than background */
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 20px;
+    -fx-font-family: "Monospaced", monospace;
+    -fx-padding: 12px 25px;
+    -fx-border-color: #00aa00; /* retro green border */
+    -fx-border-width: 3px;
+    -fx-border-radius: 0px; /* square corners */
+    -fx-effect: dropshadow(gaussian, rgba(0, 255, 0, 0.6), 6, 0.0, 0, 0);
+}
+
+/* Hover effect */
+.menuButton:hover {
+    -fx-background-color: #333333; /* Slightly lighter on hover */
+    -fx-text-fill: #00ff00; /* neon green text */
+    -fx-effect: dropshadow(gaussian, rgba(0, 255, 0, 1), 12, 0.0, 0, 0);
+    -fx-cursor: hand;
+}
+
+/* Pressed effect */
+.menuButton:pressed {
+    -fx-background-color: #111111; /* darker */
+    -fx-text-fill: #ff3333; /* red text */
+    -fx-border-color: #ff1111; /* red border */
+    -fx-effect: none;
+}

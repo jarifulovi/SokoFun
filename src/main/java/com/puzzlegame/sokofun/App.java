@@ -1,6 +1,5 @@
 package com.puzzlegame.sokofun;
 
-import com.puzzlegame.sokofun.Controllers.GamePanelController;
 import com.puzzlegame.sokofun.Logic.Abstract.GameConstants;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -13,13 +12,9 @@ import java.io.IOException;
 public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(GameConstants.GAME_PANEL_FXML));
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(GameConstants.MENU_PANEL_FXML));
         Parent root = fxmlLoader.load();
-        // Remove after implementing menu
-        // ******************************
-        GamePanelController controller = fxmlLoader.getController();
-        controller.initializeGame(1);
-        // ******************************
+
         Scene scene = new Scene(root);
         stage.setTitle("SokoFun");
         stage.setScene(scene);

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.puzzlegame.sokofun.Controllers.MenuPanelController"
+            maxWidth="1000.0" maxHeight="600.0"
+            minWidth="1000.0" minHeight="600.0"
+            styleClass="menuAnchor" stylesheets="@../CSS/menuPanel.css">
+
+    <!-- Centered VBox for Menu Items -->
+    <VBox alignment="CENTER" spacing="20.0" AnchorPane.topAnchor="0.0"
+          AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+          AnchorPane.rightAnchor="0.0">
+
+        <!-- Game Title -->
+        <Label text="Sokoban Puzzle Game"
+               styleClass="menuTitle"/>
+
+        <!-- Menu Buttons -->
+        <!-- Menu Buttons -->
+        <Button text="Start Game" fx:id="startButton" styleClass="menuButton"
+                onAction="#handleStartGame"/>
+
+        <Button text="Map Editor" fx:id="mapEditorButton" styleClass="menuButton"
+                onAction="#handleMapEditor"/>
+
+        <Button text="Map Generator" fx:id="mapGeneratorButton" styleClass="menuButton"
+                onAction="#handleMapGenerator"/>
+
+        <Button text="Solver Stats" fx:id="solverStatsButton" styleClass="menuButton"
+                onAction="#handleSolverStats"/>
+
+        <Button text="Instructions" fx:id="instructionsButton" styleClass="menuButton"
+                onAction="#handleInstructions"/>
+
+        <Button text="Options" fx:id="optionsButton" styleClass="menuButton"
+                onAction="#handleOptions"/>
+
+        <Button text="Exit" fx:id="exitButton" styleClass="menuButton"
+                onAction="#handleExit"/>
+
+
+
+    </VBox>
+
+</AnchorPane>
