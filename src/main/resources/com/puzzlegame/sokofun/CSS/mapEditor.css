@@ -1,0 +1,74 @@
+/* ================================
+   Map Options Panel Styling (mapOptionsPanel.css)
+   ================================ */
+
+/* Background for the whole options panel */
+.menuAnchor {
+    -fx-background-color: linear-gradient(to bottom, #1a1a1a, #333333); /* Dark charcoal gradient */
+}
+
+/* Title label styling */
+.menuTitle {
+    -fx-text-fill: #ffcc66; /* warm amber retro text */
+    -fx-font-size: 40px;
+    -fx-font-family: "Monospaced", monospace;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, rgba(255,204,102,0.8), 10, 0.5, 0, 0); /* glowing amber effect */
+    -fx-padding: 0 0 30 0; /* spacing below the title */
+}
+
+/* Labels for spinners */
+.label {
+    -fx-text-fill: #ffcc66; /* matching title color for consistency */
+    -fx-font-size: 18px;
+    -fx-font-family: "Monospaced", monospace;
+}
+
+/* Spinners */
+.spinner {
+    -fx-pref-width: 80px;
+    -fx-font-family: "Monospaced", monospace;
+    -fx-font-size: 16px;
+    -fx-background-color: #2b2b2b;
+    -fx-border-color: #ff9900;
+    -fx-border-width: 2px;
+    -fx-border-radius: 0px;
+    -fx-text-fill: #ffcc66;
+}
+
+/* Spinner editor (text inside spinner) */
+.spinner .text-field {
+    -fx-background-color: #2b2b2b;
+    -fx-text-fill: #ffcc66;
+    -fx-font-family: "Monospaced", monospace;
+    -fx-font-size: 16px;
+}
+
+/* Buttons */
+.menuButton {
+    -fx-background-color: #2b2b2b;
+    -fx-text-fill: #ffcc66;
+    -fx-font-size: 18px;
+    -fx-font-family: "Monospaced", monospace;
+    -fx-padding: 10px 25px;
+    -fx-border-color: #ff9900;
+    -fx-border-width: 3px;
+    -fx-border-radius: 0px;
+    -fx-effect: dropshadow(gaussian, rgba(255,153,0,0.6), 5, 0.0, 0, 0);
+}
+
+/* Button hover effect */
+.menuButton:hover {
+    -fx-background-color: #3a3a3a;
+    -fx-text-fill: #ffaa33;
+    -fx-effect: dropshadow(gaussian, rgba(255,170,51,0.9), 10, 0.0, 0, 0);
+    -fx-cursor: hand;
+}
+
+/* Button pressed effect */
+.menuButton:pressed {
+    -fx-background-color: #1f1f1f;
+    -fx-text-fill: #ff6622;
+    -fx-border-color: #ff3300;
+    -fx-effect: none;
+}

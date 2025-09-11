@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.puzzlegame.sokofun.Controllers.MapOptionsPanelController"
+            maxWidth="1000.0" maxHeight="600.0"
+            minWidth="1000.0" minHeight="600.0"
+            styleClass="menuAnchor" stylesheets="@../CSS/mapEditor.css">
+
+    <!-- Central VBox for layout -->
+    <VBox alignment="CENTER" spacing="25.0" AnchorPane.topAnchor="0.0"
+          AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+          AnchorPane.rightAnchor="0.0">
+
+        <!-- Title -->
+        <Label text="Map Options" styleClass="menuTitle"/>
+
+        <!-- Options Grid -->
+        <GridPane hgap="20" vgap="15" alignment="CENTER">
+
+            <Label text="Width:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+            <Spinner fx:id="widthSpinner" GridPane.rowIndex="0" GridPane.columnIndex="1"
+                     editable="true" prefWidth="80"/>
+
+            <Label text="Height:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+            <Spinner fx:id="heightSpinner" GridPane.rowIndex="1" GridPane.columnIndex="1"
+                     editable="true" prefWidth="80"/>
+
+            <Label text="Boxes/Goals:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+            <Spinner fx:id="boxGoalSpinner" GridPane.rowIndex="2" GridPane.columnIndex="1"
+                     editable="true" prefWidth="80"/>
+        </GridPane>
+
+        <!-- Buttons -->
+        <HBox spacing="40" alignment="CENTER">
+            <Button text="Next" styleClass="menuButton"
+                    onAction="#handleNext"/>
+            <Button text="Cancel" styleClass="menuButton"
+                    onAction="#handleCancel"/>
+        </HBox>
+
+    </VBox>
+
+</AnchorPane>
