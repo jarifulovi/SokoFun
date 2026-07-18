@@ -64,6 +64,23 @@ public class GamePanelController {
         gameBoardUI.renderInitialBoard(playerPosition[0],playerPosition[1], boardLogic.getBoard());
 
     }
+
+    // Initialize game from a custom board (e.g., map editor)
+    public void initializeGameFromBoard(int[][][] customBoard) {
+        this.level = 0; // custom
+        canUpdate = true;
+        isGameOver = false;
+        boardLogic = new BoardLogic(customBoard);
+        int[] playerPosition = boardLogic.getPlayerPosition();
+
+        int totalRow = boardLogic.getTotalRows();
+        int totalCol = boardLogic.getTotalCols();
+
+        player = new Player(playerPosition[0],playerPosition[1]);
+        gameBoardUI = new GameBoardUI(boardGrid,totalRow,totalCol);
+        resetGameOverUI();
+        gameBoardUI.renderInitialBoard(playerPosition[0],playerPosition[1], boardLogic.getBoard());
+    }
     @FXML
     public void initialize() {
         System.out.println("game panel started");

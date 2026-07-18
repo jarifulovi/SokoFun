@@ -74,4 +74,25 @@ public abstract class FxmlLoader {
             e.printStackTrace();
         }
     }
+
+    // Load game panel with a custom board (to play edited map directly)
+    public static void loadGamePanelWithBoard(String fxmlFile, ActionEvent event, int[][][] board) {
+        try {
+            FXMLLoader loader = new FXMLLoader(App.class.getResource(fxmlFile));
+            Parent root = loader.load();
+
+            GamePanelController controller = loader.getController();
+            if (controller != null) {
+                controller.initializeGameFromBoard(board);
+            }
+
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.setTitle("SokoFun");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

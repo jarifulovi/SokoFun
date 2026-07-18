@@ -23,6 +23,15 @@ public class BoardLogic {
         this.totalCol = board[0][0].length;
     }
 
+    // New constructor to initialize logic from a custom board (e.g., from editor)
+    public BoardLogic(int[][][] customBoard) {
+        this.levelLoader = null;
+        this.initialBoard = Utils.copyBoard(customBoard);
+        this.board = Utils.copyBoard(customBoard);
+        this.totalRow = board[0].length;
+        this.totalCol = board[0][0].length;
+    }
+
     public void resetBoard() {
         board = Utils.copyBoard(initialBoard);
     }
