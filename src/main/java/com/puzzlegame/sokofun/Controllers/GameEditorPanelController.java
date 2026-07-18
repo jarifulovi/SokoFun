@@ -165,9 +165,45 @@ public class GameEditorPanelController {
             // Bounds safety
             if (row < 0 || row >= mapHeight || col < 0 || col >= mapWidth) return;
 
-            // Enforce box placement limit
+            int currentBlock = map[GameConstants.BLOCK_INDEX][row][col];
+
+            // Toggle remove: if BOX selected on existing BOX, remove it
             if (selectedLayer == GameConstants.BLOCK_INDEX && selectedType == GameConstants.BOX) {
-                boolean placingNewBox = map[GameConstants.BLOCK_INDEX][row][col] != GameConstants.BOX;
+                if (currentBlock == GameConstants.BOX) {
+                    map[GameConstants.BLOCK_INDEX][row][col] = GameConstants.NOTHING;
+                    drawCellFromMap(row, col);
+                    return;
+                }
+            }
+
+            // Toggle remove: if PLAYER selected on existing PLAYER, remove it
+            if (selectedLayer == GameConstants.BLOCK_INDEX && selectedType == GameConstants.PLAYER) {
+                if (currentBlock == GameConstants.PLAYER) {
+                    map[GameConstants.BLOCK_INDEX][row][col] = GameConstants.NOTHING;
+                    drawCellFromMap(row, col);
+                    return;
+                }
+            }
+
+            // Prevent placing PLAYER on existing walls or boxes
+            if (selectedLayer == GameConstants.BLOCK_INDEX && selectedType == GameConstants.PLAYER) {
+                if (currentBlock != GameConstants.NOTHING && currentBlock != GameConstants.PLAYER) {
+                    System.out.println("Cannot place Player on walls or boxes. Clear the cell first.");
+                    return;
+                }
+            }
+
+            // Prevent placing BOX on existing walls or player/box
+            if (selectedLayer == GameConstants.BLOCK_INDEX && selectedType == GameConstants.BOX) {
+                if (currentBlock != GameConstants.NOTHING) {
+                    System.out.println("Cannot place Box on occupied cell. Clear the cell first.");
+                    return;
+                }
+            }
+
+            // Enforce box placement limit (only when actually placing a new box)
+            if (selectedLayer == GameConstants.BLOCK_INDEX && selectedType == GameConstants.BOX) {
+                boolean placingNewBox = currentBlock != GameConstants.BOX;
                 if (placingNewBox) {
                     int currentBoxes = countBoxes();
                     if (currentBoxes >= boxGoal) {
@@ -189,13 +225,6 @@ public class GameEditorPanelController {
                 }
             }
 
-            var gc = mapCanvas.getGraphicsContext2D();
-            gc.drawImage(this.selectedTileImage, col * tileSize, row * tileSize, tileSize, tileSize);
-
-            // redraw grid border on top
-            gc.setStroke(javafx.scene.paint.Color.GRAY);
-            gc.strokeRect(col * tileSize, row * tileSize, tileSize, tileSize);
-
             // Update underlying map model [layer][row][col]
             if (selectedType == GameConstants.PLAYER) {
                 // ensure only one player exists: clear previous and redraw those cells
@@ -210,6 +239,12 @@ public class GameEditorPanelController {
                 }
             }
             map[selectedLayer][row][col] = selectedType;
+
+            // Finally draw the selected image on canvas for this cell
+            var gc = mapCanvas.getGraphicsContext2D();
+            gc.drawImage(this.selectedTileImage, col * tileSize, row * tileSize, tileSize, tileSize);
+            gc.setStroke(javafx.scene.paint.Color.GRAY);
+            gc.strokeRect(col * tileSize, row * tileSize, tileSize, tileSize);
         });
     }
 
