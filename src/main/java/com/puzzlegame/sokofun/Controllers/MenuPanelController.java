@@ -2,6 +2,7 @@ package com.puzzlegame.sokofun.Controllers;
 
 import com.puzzlegame.sokofun.Logic.Abstract.FxmlLoader;
 import com.puzzlegame.sokofun.Logic.Abstract.GameConstants;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
@@ -20,9 +21,10 @@ public class MenuPanelController {
     }
 
     @FXML
-    private void handleMapEditor() {
+    private void handleMapEditor(ActionEvent event) {
         // TODO: Open map editor scene
         System.out.println("Map Editor button clicked");
+        FxmlLoader.loadPanel(GameConstants.MAP_OPTIONS_FXML, event);
     }
 
     @FXML
@@ -51,8 +53,7 @@ public class MenuPanelController {
 
     @FXML
     private void handleExit() {
-        // TODO: Exit the application
         System.out.println("Exit button clicked");
-        System.exit(0);
+        Platform.exit();
     }
 }

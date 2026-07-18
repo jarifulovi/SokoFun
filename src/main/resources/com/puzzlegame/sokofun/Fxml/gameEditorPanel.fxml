@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+
+
+<AnchorPane fx:id="mainAnchor" maxHeight="600.0" maxWidth="1000.0"
+            minHeight="600.0" minWidth="1000.0"
+            xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.puzzlegame.sokofun.Controllers.GameEditorPanelController"
+            stylesheets="@../CSS/mapEditor.css"
+            styleClass="menuAnchor">
+   <children>
+      <Canvas fx:id="mapCanvas" height="600.0" width="700.0" />
+      <VBox fx:id="stateBox" id="stateBox" layoutX="700.0" maxHeight="600.0" maxWidth="300.0" minHeight="600.0" minWidth="300.0">
+         <children>
+            <Label prefHeight="17.0" prefWidth="304.0" text="Ground Tiles" textAlignment="CENTER">
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </Label>
+            <HBox alignment="CENTER" prefHeight="71.0" prefWidth="300.0" spacing="10.0">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <children>
+                  <Button fx:id="floorTileButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="70.0" contentDisplay="GRAPHIC_ONLY" onAction="#handleGroundTile">
+                                       <graphic>
+                                          <ImageView fitHeight="50.0" fitWidth="70.0" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../Assets/image-pack/PNG/Default size/Ground/floor.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Button>
+                  <Button fx:id="sandTileButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="70.0" contentDisplay="GRAPHIC_ONLY" onAction="#handleGroundTile">
+                                       <graphic>
+                                          <ImageView fitHeight="50.0" fitWidth="70.0" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../Assets/image-pack/PNG/Default size/Ground/sand.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Button>
+                  <Button fx:id="greenTileButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="70.0" contentDisplay="GRAPHIC_ONLY" onAction="#handleGroundTile">
+                                       <graphic>
+                                          <ImageView fitHeight="50.0" fitWidth="70.0" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../Assets/image-pack/PNG/Default size/Ground/green.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Button>
+               </children>
+            </HBox>
+            <Label prefHeight="17.0" prefWidth="303.0" text="Block Tiles" textAlignment="CENTER">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </Label>
+            <HBox alignment="CENTER" prefHeight="71.0" prefWidth="300.0" spacing="10.0">
+               <children>
+                  <Button fx:id="stoneTileButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="70.0" contentDisplay="GRAPHIC_ONLY" onAction="#handleBlockTile">
+                                       <graphic>
+                                          <ImageView fitHeight="50.0" fitWidth="70.0" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../Assets/image-pack/PNG/Default size/Blocks/stone.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Button>
+                  <Button fx:id="woodTileButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="70.0" contentDisplay="GRAPHIC_ONLY" onAction="#handleBlockTile">
+                                       <graphic>
+                                          <ImageView fitHeight="50.0" fitWidth="70.0" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../Assets/image-pack/PNG/Default size/Blocks/wood.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Button>
+                  <Button fx:id="redTileButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="70.0" contentDisplay="GRAPHIC_ONLY" onAction="#handleBlockTile">
+                                       <graphic>
+                                          <ImageView fitHeight="50.0" fitWidth="70.0" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../Assets/image-pack/PNG/Default size/Blocks/red.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Button>
+               </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="71.0" prefWidth="300.0" spacing="10.0">
+               <children>
+                  <Button fx:id="stoneBlockTileButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="70.0" contentDisplay="GRAPHIC_ONLY" onAction="#handleBlockTile">
+                                       <graphic>
+                                          <ImageView fitHeight="50.0" fitWidth="70.0" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../Assets/image-pack/PNG/Default size/Blocks/stone_block.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Button>
+                  <Button fx:id="woodBlockTileButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="70.0" contentDisplay="GRAPHIC_ONLY" onAction="#handleBlockTile">
+                                       <graphic>
+                                          <ImageView fitHeight="50.0" fitWidth="70.0" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../Assets/image-pack/PNG/Default size/Blocks/wood_block.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Button>
+                  <Button fx:id="redBlockTileButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="70.0" contentDisplay="GRAPHIC_ONLY" onAction="#handleBlockTile">
+                                       <graphic>
+                                          <ImageView fitHeight="50.0" fitWidth="70.0" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../Assets/image-pack/PNG/Default size/Blocks/red_block.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Button>
+               </children>
+            </HBox>
+            <Label prefHeight="17.0" prefWidth="303.0" text="Goal Tiles" textAlignment="CENTER">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </Label>
+            <HBox alignment="CENTER" prefHeight="71.0" prefWidth="300.0" spacing="10.0">
+               <children>
+                  <Button fx:id="woodGoalButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="70.0" contentDisplay="GRAPHIC_ONLY" onAction="#handleGoalTile">
+                                       <graphic>
+                                          <ImageView fitHeight="50.0" fitWidth="70.0" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../Assets/image-pack/PNG/Default size/Objects/wood_goal.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Button>
+                  <Button fx:id="greenGoalButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="70.0" contentDisplay="GRAPHIC_ONLY" onAction="#handleGoalTile">
+                                       <graphic>
+                                          <ImageView fitHeight="50.0" fitWidth="70.0" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../Assets/image-pack/PNG/Default size/Objects/green_goal.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Button>
+                  <Button fx:id="stoneGoalButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="70.0" contentDisplay="GRAPHIC_ONLY" onAction="#handleGoalTile">
+                                       <graphic>
+                                          <ImageView fitHeight="50.0" fitWidth="70.0" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../Assets/image-pack/PNG/Default size/Objects/stone_goal.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Button>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="71.0" prefWidth="300.0" spacing="10.0">
+               <children>
+                  <Button fx:id="blueGoalButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="70.0" contentDisplay="GRAPHIC_ONLY" onAction="#handleGoalTile">
+                                       <graphic>
+                                          <ImageView fitHeight="50.0" fitWidth="70.0" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../Assets/image-pack/PNG/Default size/Objects/blue_goal.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Button>
+                  <Button fx:id="redGoalButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="70.0" contentDisplay="GRAPHIC_ONLY" onAction="#handleGoalTile">
+                                       <graphic>
+                                          <ImageView fitHeight="50.0" fitWidth="70.0" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../Assets/image-pack/PNG/Default size/Objects/red_goal.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Button>
+                  <Button fx:id="coinButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="70.0" contentDisplay="GRAPHIC_ONLY" onAction="#handleGoalTile">
+                                       <graphic>
+                                          <ImageView fitHeight="50.0" fitWidth="70.0" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../Assets/image-pack/PNG/Default size/Objects/coin.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Button>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="63.0" prefWidth="300.0" spacing="30.0">
+               <children>
+                  <Button fx:id="addPlayerButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="Add Player" onAction="#handleAddPlayer">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="addBoxButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="Add Box" onAction="#handleAddBox">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="54.0" prefWidth="300.0" spacing="20.0">
+               <VBox.margin>
+                  <Insets top="40.0" />
+               </VBox.margin>
+               <children>
+                  <Button fx:id="quitButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="60.0" text="Quit" onAction="#handleQuit"/>
+                  <Button fx:id="resetButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="60.0" text="Reset" onAction="#handleReset"/>
+                  <Button fx:id="doneButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="60.0" text="Done" onAction="#handleDone"/>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

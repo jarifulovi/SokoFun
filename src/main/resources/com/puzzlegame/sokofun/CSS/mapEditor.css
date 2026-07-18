@@ -1,13 +1,13 @@
 /* ================================
-   Map Options Panel Styling (mapOptionsPanel.css)
+   Map Editor Styling (mapEditor.css)
    ================================ */
 
-/* Background for the whole options panel */
+/* Background for the whole editor root */
 .menuAnchor {
-    -fx-background-color: linear-gradient(to bottom, #1a1a1a, #333333); /* Dark charcoal gradient */
+    -fx-background-color: linear-gradient(to bottom, #1a1a1a, #2b2b2b); /* Dark charcoal gradient */
 }
 
-/* Title label styling */
+/* Title label styling (if used) */
 .menuTitle {
     -fx-text-fill: #ffcc66; /* warm amber retro text */
     -fx-font-size: 40px;
@@ -17,34 +17,51 @@
     -fx-padding: 0 0 30 0; /* spacing below the title */
 }
 
-/* Labels for spinners */
+/* Labels */
 .label {
     -fx-text-fill: #ffcc66; /* matching title color for consistency */
     -fx-font-size: 18px;
     -fx-font-family: "Monospaced", monospace;
 }
 
-/* Spinners */
-.spinner {
-    -fx-pref-width: 80px;
-    -fx-font-family: "Monospaced", monospace;
-    -fx-font-size: 16px;
+/* Right-side toolbox panel */
+#stateBox {
+    -fx-background-color: rgba(25, 25, 25, 0.75);
+    -fx-padding: 12px;
+    -fx-spacing: 8px;
+    -fx-border-color: #ff9900;
+    -fx-border-width: 0 0 0 2px; /* subtle divider on the left edge of panel */
+}
+
+/* Buttons inside the toolbox (beneath images) */
+#stateBox .button {
     -fx-background-color: #2b2b2b;
+    -fx-text-fill: #ffcc66;
+    -fx-font-size: 14px;
+    -fx-font-family: "Monospaced", monospace;
+    -fx-padding: 6px 8px;
     -fx-border-color: #ff9900;
     -fx-border-width: 2px;
-    -fx-border-radius: 0px;
-    -fx-text-fill: #ffcc66;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-effect: dropshadow(gaussian, rgba(255,153,0,0.35), 4, 0.0, 0, 0);
 }
 
-/* Spinner editor (text inside spinner) */
-.spinner .text-field {
-    -fx-background-color: #2b2b2b;
-    -fx-text-fill: #ffcc66;
-    -fx-font-family: "Monospaced", monospace;
-    -fx-font-size: 16px;
+#stateBox .button:hover {
+    -fx-background-color: #3a3a3a;
+    -fx-text-fill: #ffaa33;
+    -fx-effect: dropshadow(gaussian, rgba(255,170,51,0.6), 8, 0.0, 0, 0);
+    -fx-cursor: hand;
 }
 
-/* Buttons */
+#stateBox .button:pressed {
+    -fx-background-color: #1f1f1f;
+    -fx-text-fill: #ff6622;
+    -fx-border-color: #ff3300;
+    -fx-effect: none;
+}
+
+/* Generic menu buttons (if used elsewhere) */
 .menuButton {
     -fx-background-color: #2b2b2b;
     -fx-text-fill: #ffcc66;
@@ -57,7 +74,6 @@
     -fx-effect: dropshadow(gaussian, rgba(255,153,0,0.6), 5, 0.0, 0, 0);
 }
 
-/* Button hover effect */
 .menuButton:hover {
     -fx-background-color: #3a3a3a;
     -fx-text-fill: #ffaa33;
@@ -65,7 +81,6 @@
     -fx-cursor: hand;
 }
 
-/* Button pressed effect */
 .menuButton:pressed {
     -fx-background-color: #1f1f1f;
     -fx-text-fill: #ff6622;

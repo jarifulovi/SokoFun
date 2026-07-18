@@ -110,8 +110,9 @@ public class GamePanelController {
 
 
     @FXML
-    private void onMenuButton() {
+    private void onMenuButton(ActionEvent event) {
         System.out.println("go back menu");
+        FxmlLoader.loadPanel(GameConstants.MENU_PANEL_FXML, event);
     }
 
     @FXML

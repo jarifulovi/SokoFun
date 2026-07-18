@@ -28,6 +28,10 @@ public class GameBoardUI {
         tileWidth = calculateTileWidth(numCols);
         tileHeight = calculateTileHeight(numRows);
 
+        // Configure GridPane to eliminate gaps
+        boardGrid.setHgap(0);
+        boardGrid.setVgap(0);
+
         this.playerUI = new PlayerUI(boardGrid);
     }
 
@@ -143,6 +147,8 @@ public class GameBoardUI {
             for (int col = 0; col < numCols; col++) {
                 ColumnConstraints colConstraints = new ColumnConstraints();
                 colConstraints.setMinWidth(tileWidth);
+                colConstraints.setPrefWidth(tileWidth);
+                colConstraints.setMaxWidth(tileWidth);
                 boardGrid.getColumnConstraints().add(colConstraints);
             }
         }
@@ -152,6 +158,8 @@ public class GameBoardUI {
             for (int row = 0; row < numRows; row++) {
                 RowConstraints rowConstraints = new RowConstraints();
                 rowConstraints.setMinHeight(tileHeight);
+                rowConstraints.setPrefHeight(tileHeight);
+                rowConstraints.setMaxHeight(tileHeight);
                 boardGrid.getRowConstraints().add(rowConstraints);
             }
         }
@@ -178,12 +186,12 @@ public class GameBoardUI {
     }
 
     private double calculateTileWidth(int numCols) {
-        return (double) GameConstants.BOARD_WIDTH / numCols;
+        return Math.ceil((double) GameConstants.BOARD_WIDTH / numCols);
     }
 
 
     private double calculateTileHeight(int numRows) {
-        return (double) GameConstants.BOARD_HEIGHT / numRows;
+        return Math.ceil((double) GameConstants.BOARD_HEIGHT / numRows);
     }
 
 }

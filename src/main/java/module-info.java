@@ -2,6 +2,8 @@ module com.puzzlegame.sokofun {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.web;
+    requires jdk.jshell;
+    requires java.desktop;
 
     opens com.puzzlegame.sokofun to javafx.fxml;
     exports com.puzzlegame.sokofun;

@@ -37,6 +37,7 @@ public class Solver {
 
     public void solve(BoardState boardState) {
 
+        this.deadLock.clearStaticDeadLocks();
         // BFS queue
         Queue<BoardState> queue = new LinkedList<>();
         queue.add(boardState.copy());
@@ -74,7 +75,7 @@ public class Solver {
 
                 next.applyMove(move);
 
-                // if (deadLock.isDeadLock(next)) continue; // prune
+                if (deadLock.isDeadLock(next)) continue; // prune
 
 
                 if (!visited.contains(next)) {
@@ -165,7 +166,7 @@ public class Solver {
     public static void main(String[] args) {
 
         try {
-            int level = 3;
+            int level = 5;
             LevelLoader loader = new LevelLoader(level);
             int[][][] board = loader.getLevelBoard();
             Converter converter = new Converter(board);

@@ -9,7 +9,7 @@ public final class GameConstants {
     public static final int BOARD_WIDTH = 700;
     public static final int BOARD_HEIGHT = 600;
 
-    public static final int TOTAL_LEVELS = 2;
+    public static final int TOTAL_LEVELS = 5;
 
     public static final int GROUND_INDEX = 0;
     public static final int BLOCK_INDEX = 1;
@@ -47,6 +47,8 @@ public final class GameConstants {
 
     // Fxml paths
     public static final String GAME_PANEL_FXML = "Fxml/gamePanel.fxml";
+    public static final String GAME_EDITOR_FXML = "Fxml/gameEditorPanel.fxml";
+    public static final String MAP_OPTIONS_FXML = "Fxml/mapOptionsPanel.fxml";
     public static final String MENU_PANEL_FXML = "Fxml/menuPanel.fxml";
     public static final String OPTIONS_PANEL_FXML = "Fxml/optionsPanel.fxml";
 

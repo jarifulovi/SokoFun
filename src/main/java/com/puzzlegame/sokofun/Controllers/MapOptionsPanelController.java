@@ -4,7 +4,6 @@ import com.puzzlegame.sokofun.Logic.Abstract.FxmlLoader;
 import com.puzzlegame.sokofun.Logic.Abstract.GameConstants;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 
@@ -25,15 +24,18 @@ public class MapOptionsPanelController {
         widthSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(5, 30, 10));
         heightSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(5, 20, 10));
         boxGoalSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 10, 3));
+
+        widthSpinner.setEditable(false);
+        heightSpinner.setEditable(false);
+        boxGoalSpinner.setEditable(false);
+
     }
 
     @FXML
-    private void handleNext() {
-        // TODO: Open map editor scene with the selected options
+    private void handleNext(ActionEvent event) {
         System.out.println("Next button clicked");
-        System.out.println("Width: " + widthSpinner.getValue());
-        System.out.println("Height: " + heightSpinner.getValue());
-        System.out.println("Box/Goal Pairs: " + boxGoalSpinner.getValue());
+        FxmlLoader.loadGameEditorPanel(GameConstants.GAME_EDITOR_FXML, event,
+                widthSpinner.getValue(), heightSpinner.getValue(), boxGoalSpinner.getValue());
     }
 
     @FXML
