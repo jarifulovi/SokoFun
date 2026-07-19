@@ -92,22 +92,61 @@ public class Solver {
     }
 
     private void reconstructPath(BoardState solution, Map<BoardState, BoardState> parentMap, Map<BoardState, Move> moveMap) {
-        List<Move> path = new ArrayList<>();
+        // 1) Backtrack to get push-only moves from start to solution
+        List<Move> pushOnly = new ArrayList<>();
         BoardState current = solution;
-
-        // Backtrack from solution to initial state
         while (parentMap.get(current) != null) {
             Move move = moveMap.get(current);
             if (move != null) {
-                path.add(move);
+                pushOnly.add(move);
             }
             current = parentMap.get(current);
         }
+        Collections.reverse(pushOnly);
 
-        // Reverse to get the correct order (from start to solution)
-        Collections.reverse(path);
-        this.moves = path;
-        // We ignore the in between player moves for now
+        // 2) Reconstruct initial state by walking back to the root node
+        BoardState root = solution;
+        while (parentMap.get(root) != null) {
+            root = parentMap.get(root);
+        }
+        BoardState simulator = root.copy();
+        int currentPlayerIdx = simulator.getPlayerPosition();
+
+        // 3) Expand to full sequence including in-between player moves
+        List<Move> fullMoves = new ArrayList<>();
+        for (Move pushMove : pushOnly) {
+            // Where the player must stand to perform the push
+            int pushPosIdx = SolverUtils.toIndex(pushMove.getPrevRow(), pushMove.getPrevCol(), simulator.getTotalCols());
+
+            // Find shortest free-space path from current player to required push position
+            List<Integer> path = pathFinder.getShortestPath(simulator, currentPlayerIdx, pushPosIdx);
+            if (path.isEmpty()) {
+                // Should not happen since BFS ensured reachability, but guard anyway
+                throw new IllegalStateException("No path found to push position during reconstruction");
+            }
+            // Convert index path to walking moves (skip the first index which is current position)
+            for (int i = 1; i < path.size(); i++) {
+                int from = path.get(i - 1);
+                int to = path.get(i);
+                int fromRow = SolverUtils.getRow(from, simulator.getTotalCols());
+                int fromCol = SolverUtils.getCol(from, simulator.getTotalCols());
+                int toRow = SolverUtils.getRow(to, simulator.getTotalCols());
+                int toCol = SolverUtils.getCol(to, simulator.getTotalCols());
+                int dir = (toRow < fromRow) ? GameConstants.UP :
+                          (toRow > fromRow) ? GameConstants.DOWN :
+                          (toCol < fromCol) ? GameConstants.LEFT : GameConstants.RIGHT;
+                Move walk = new Move(fromRow, fromCol, toRow, toCol, dir);
+                // walk move is not a push
+                simulator.applyMove(walk);
+                fullMoves.add(walk);
+            }
+            // Now perform the actual push
+            simulator.applyMove(pushMove);
+            fullMoves.add(pushMove);
+            currentPlayerIdx = simulator.getPlayerPosition();
+        }
+
+        this.moves = fullMoves;
     }
 
 
@@ -164,47 +203,32 @@ public class Solver {
 
 
     public static void main(String[] args) {
-
         try {
-            int level = 5;
+            int level = 5; // default test level
+            long slower = 1500;
             LevelLoader loader = new LevelLoader(level);
             int[][][] board = loader.getLevelBoard();
             Converter converter = new Converter(board);
             BoardState boardState = converter.getSolverState();
 
-            System.out.println("Initial board state:");
-            System.out.println("Player position: " + boardState.getPlayerPosition());
-            System.out.println("Box positions: " + boardState.getBoxPositions());
-            System.out.println("Goal positions: " + boardState.getGoalPositions());
-            System.out.println("Board size: " + boardState.getTotalRows() + "x" + boardState.getTotalCols());
+            // Print initial board
+            boardState.printBoard();
+            Thread.sleep(slower);
 
             Solver solver = new Solver();
-            // Start the solving process and measure time
-            long startTime = System.currentTimeMillis();
             solver.solve(boardState);
-            long endTime = System.currentTimeMillis();
 
             if (solver.getIsSolvable()) {
-                List<Move> moves = solver.getMoves();
-                System.out.println("Solution found in " + moves.size() + " moves.");
-                for (Move move : moves) {
-                    System.out.println(move.toString());
+                // Simulate and print each step
+                BoardState simulator = boardState.copy();
+                for (Move move : solver.getMoves()) {
+                    simulator.applyMove(move);
+                    simulator.printBoard();
+                    Thread.sleep(slower);
                 }
-            } else {
-                System.out.println("No solution exists.");
             }
-            System.out.println("Time taken: " + (endTime - startTime) + " ms");
         } catch (Exception e) {
-            System.err.println("Error occurred: " + e.getMessage());
             e.printStackTrace();
         }
-
-        // Notes
-        // Pushable positions are bi-direction ( if left then also right ignoring player reachability )
-        // After pushable player reachability is filtered
-        // Then moves are generated in all 4 directions for each pushable position (assuming box is there)
-        // If no box present then there is bug in pushable position generation
-        // In-between player moves are ignored ( only consider moves to pushable positions )
-        // So before update player position should be set to pushable position
     }
 }

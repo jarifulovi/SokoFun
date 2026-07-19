@@ -6,6 +6,55 @@ import java.util.*;
 // This class finds if the player can reach any of the target positions using BFS
 public class PathFinder {
 
+    /**
+     * Compute the shortest path (in free spaces) from start to target using BFS.
+     * Returns a list of indices including both start and target.
+     * If no path exists, returns an empty list.
+     */
+    public List<Integer> getShortestPath(BoardState currentState, int start, int target) {
+        if (start < 0 || target < 0) {
+            throw new IllegalArgumentException("Positions cannot be negative");
+        }
+        if (start == target) {
+            return Collections.singletonList(start);
+        }
+        Queue<Integer> queue = new LinkedList<>();
+        Map<Integer, Integer> parent = new HashMap<>();
+        Set<Integer> visited = new HashSet<>();
+
+        queue.add(start);
+        visited.add(start);
+        parent.put(start, null);
+
+        while (!queue.isEmpty()) {
+            int current = queue.poll();
+            int[] directions = SolverUtils.getDirections(current, currentState);
+            for (int next : directions) {
+                if (next == -1 || visited.contains(next)) continue;
+                try {
+                    if (currentState.isFreeSpace(next)) {
+                        visited.add(next);
+                        parent.put(next, current);
+                        if (next == target) {
+                            // reconstruct
+                            List<Integer> path = new ArrayList<>();
+                            Integer cur = target;
+                            while (cur != null) {
+                                path.add(cur);
+                                cur = parent.get(cur);
+                            }
+                            Collections.reverse(path);
+                            return path;
+                        }
+                        queue.add(next);
+                    }
+                } catch (IllegalArgumentException ignored) {
+                }
+            }
+        }
+        return Collections.emptyList();
+    }
+
 
     /**
      * Find all reachable target positions from the start position

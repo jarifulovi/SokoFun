@@ -43,7 +43,6 @@ public class DeadLock {
     }
 
     protected void addStaticDeadLockPosition(BoardState boardState) {
-        System.out.println("Starting addStaticDeadLockPosition...");
         // check corridors above
         for (int row = 0; row < boardState.getTotalRows() - 1; row++) {
 
@@ -51,7 +50,6 @@ public class DeadLock {
             boolean corridorStarted = false;
             for (int col = 0; col < boardState.getTotalCols(); col++) {
                 int index = row * boardState.getTotalCols() + col;
-                System.out.println("Processing index: " + index);
                 corridorStarted = this.processTileForCorridor(corridorPositions, boardState, corridorStarted, index,
                         GameConstants.UP, GameConstants.LEFT, GameConstants.RIGHT);
             }
@@ -64,7 +62,6 @@ public class DeadLock {
             boolean corridorStarted = false;
             for (int col = 0; col < boardState.getTotalCols(); col++) {
                 int index = row * boardState.getTotalCols() + col;
-                System.out.println("Processing index: " + index);
                 corridorStarted = this.processTileForCorridor(corridorPositions, boardState, corridorStarted, index,
                         GameConstants.DOWN, GameConstants.LEFT, GameConstants.RIGHT);
             }
@@ -77,7 +74,6 @@ public class DeadLock {
             boolean corridorStarted = false;
             for (int row = 0; row < boardState.getTotalRows(); row++) {
                 int index = row * boardState.getTotalCols() + col;
-                System.out.println("Processing index: " + index);
                 corridorStarted = this.processTileForCorridor(corridorPositions, boardState, corridorStarted, index,
                         GameConstants.LEFT, GameConstants.UP, GameConstants.DOWN);
             }
@@ -90,7 +86,6 @@ public class DeadLock {
             boolean corridorStarted = false;
             for (int row = 0; row < boardState.getTotalRows(); row++) {
                 int index = row * boardState.getTotalCols() + col;
-                System.out.println("Processing index: " + index);
                 corridorStarted = this.processTileForCorridor(corridorPositions, boardState, corridorStarted, index,
                         GameConstants.RIGHT, GameConstants.UP, GameConstants.DOWN);
             }
@@ -98,7 +93,6 @@ public class DeadLock {
 
         // Ensure static deadlocks are computed
         this.isStaticDeadLockComputed = true;
-        System.out.println("Finished addStaticDeadLockPosition.");
     }
 
     private boolean processTileForCorridor(HashSet<Integer> corridorPositions, BoardState boardState,
@@ -106,28 +100,20 @@ public class DeadLock {
                                            int startDir, int endDir) {
 
         int[] directions = SolverUtils.getDirections(index, boardState);
-        System.out.println("Directions for index " + index + ": " + java.util.Arrays.toString(directions));
         if (boardState.isFreeSpace(index)) {
-            System.out.println("Index " + index + " is free space.");
             if (!SolverUtils.isValidPosition(directions[direction], boardState)) {
-                System.out.println("Direction " + direction + " is not valid for index " + index);
                 if (!SolverUtils.isValidPosition(directions[startDir], boardState)) {
-                    System.out.println("Start direction " + startDir + " is not valid for index " + index);
                     isStarted = true;
                 }
 
                 if (isStarted) {
-                    System.out.println("Adding index " + index + " to corridor positions.");
                     corridorPositions.add(index);
                 }
 
                 if (!SolverUtils.isValidPosition(directions[endDir], boardState)) {
-                    System.out.println("End direction " + endDir + " is not valid for index " + index);
                     isStarted = false;
                     if (!corridorPositions.isEmpty()) {
-                        System.out.println("Corridor found: " + corridorPositions);
                         if (this.isDeadLockCorridor(corridorPositions, boardState)) {
-                            System.out.println("Static deadlock detected in corridor: " + corridorPositions);
                             this.staticDeadLockPositions.addAll(corridorPositions);
                         }
                         corridorPositions.clear();

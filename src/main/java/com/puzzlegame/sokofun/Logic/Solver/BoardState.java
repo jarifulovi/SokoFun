@@ -184,4 +184,32 @@ public class BoardState {
         return !wallPositions.contains(index) && !boxPositions.contains(index);
     }
 
+    // #: Wall, B: Box, *: Box on Goal, .: Goal, P: Player, +: Player on Goal, ' ' : Empty
+    public void printBoard() {
+        System.out.println("// #: Wall, B: Box, *: Box on Goal, .: Goal, P: Player, +: Player on Goal, ' ' : Empty");
+        for (int r = 0; r < totalRows; r++) {
+            StringBuilder sb = new StringBuilder();
+            for (int c = 0; c < totalCols; c++) {
+                int idx = SolverUtils.toIndex(r, c, totalCols);
+                char ch;
+                boolean isGoal = goalPositions.contains(idx);
+                boolean isBox = boxPositions.contains(idx);
+                boolean isWall = wallPositions.contains(idx);
+                boolean isPlayer = (playerPosition == idx);
+
+                if (isWall) ch = '#';
+                else if (isBox && isGoal) ch = '*';
+                else if (isPlayer && isGoal) ch = '+';
+                else if (isBox) ch = 'B';
+                else if (isPlayer) ch = 'P';
+                else if (isGoal) ch = '.';
+                else ch = ' ';
+
+                sb.append(ch);
+            }
+            System.out.println(sb.toString());
+        }
+        System.out.println();
+    }
+
 }
