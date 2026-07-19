@@ -14,10 +14,6 @@ public class BFSStrategy implements SearchStrategy {
 
     private final SolverContext context;
 
-    public BFSStrategy() {
-        this(new SolverContext());
-    }
-
     public BFSStrategy(SolverContext context) {
         this.context = context;
     }
@@ -47,8 +43,15 @@ public class BFSStrategy implements SearchStrategy {
         parentMap.put(start, null);
         moveMap.put(start, null);
 
+        long iterations = 0;
         while (!queue.isEmpty()) {
             BoardState current = queue.poll();
+            iterations++;
+            if (iterations % 10000 == 0) {
+                System.out.println("Expanded states: " + iterations);
+                System.out.println("Queue size: " + queue.size());
+                System.out.println("Visited: " + visited.size());
+            }
 
             if (current.isSucceed()) {
                 List<Move> fullMoves = pathConstructor.constructFullPath(current, parentMap, moveMap);

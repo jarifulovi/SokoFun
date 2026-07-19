@@ -1,6 +1,9 @@
 package com.puzzlegame.sokofun.Logic.Solver;
 
 import com.puzzlegame.sokofun.Logic.GameLogic.LevelLoader;
+import com.puzzlegame.sokofun.Logic.Solver.Heuristic.Heuristic;
+import com.puzzlegame.sokofun.Logic.Solver.Heuristic.WallDistanceHeuristic;
+import com.puzzlegame.sokofun.Logic.Solver.Strategy.AStarStrategy;
 import com.puzzlegame.sokofun.Logic.Solver.Strategy.BFSStrategy;
 import com.puzzlegame.sokofun.Logic.Solver.Strategy.SearchStrategy;
 import com.puzzlegame.sokofun.Object.Move;
@@ -65,7 +68,7 @@ public class Solver {
 
     public static void main(String[] args) {
         try {
-            int level = 3; // default test level
+            int level = 5; // default test level
             long slower = 500;
             LevelLoader loader = new LevelLoader(level);
             int[][][] board = loader.getLevelBoard();
@@ -76,7 +79,8 @@ public class Solver {
             boardState.printBoard();
             Thread.sleep(slower);
 
-            Solver solver = new Solver();
+            Heuristic heuristic = new WallDistanceHeuristic(boardState);
+            Solver solver = new Solver(new AStarStrategy(new SolverContext(), heuristic));
             solver.solve(boardState);
 
             if (solver.getIsSolvable()) {
